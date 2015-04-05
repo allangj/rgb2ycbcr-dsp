@@ -1,4 +1,13 @@
 #   ============================================================================
+#   @file   DIRS
+#
+#   @path   $(DSPLINK)/dsp/src/samples/
+#
+#   @desc   This file defines the set of sub directories to be considered
+#           by the MAKE system.
+#
+#   @ver    1.65.00.03
+#   ============================================================================
 #   Copyright (C) 2015, Allan Granados
 #
 #   Redistribution and use in source and binary forms, with or without
@@ -24,14 +33,18 @@
 #   OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 #   EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #   ============================================================================
-Color space transformation using the DSP by DSPLINK API
 
-This is intended only as a sample aplication. The repository
-is fetched by a personal Yocto Recipe, which configure
-and construct the files by adding it into the samples
-of DSPLINK and construct it
 
-The custom recipe create links to the GPP and DSP directory
-as corresponding, modify the DIR files using the ones on 
-this directory so we compile the desire app and finally 
-call make
+#   ============================================================================
+#   Generic information about the component
+#   ============================================================================
+
+DIR_NAME    := SAMPLES
+
+
+#   ============================================================================
+#   List of directories in the component
+#   ============================================================================
+
+DIRS  := rgb2ycbcr-dsp
+
