@@ -161,7 +161,7 @@ static Void readFinishCb  (Ptr arg, Int status, Ptr bufp, Uns size) ;
 static Void writeFinishCb (Ptr arg, Int status, Ptr bufp, Uns size) ;
 
 /** ----------------------------------------------------------------------------
- *  @func   rgb2ycbcr-dspSWI
+ *  @func   rgb2ycbcr_dspSWI
  *
  *  @desc   Entry point for SWI that does data processing.
  *
@@ -183,7 +183,7 @@ static Void writeFinishCb (Ptr arg, Int status, Ptr bufp, Uns size) ;
  *  @see    None
  *  ----------------------------------------------------------------------------
  */
-static Void rgb2ycbcr-dspSWI (Arg arg0, Arg arg1) ;
+static Void rgb2ycbcr_dspSWI (Arg arg0, Arg arg1) ;
 
 
 /** ============================================================================
@@ -268,7 +268,7 @@ Int SWIRGB2YCBCR_DSP_create (SWIRGB2YCBCR_DSP_TransferInfo ** infoPtr)
 
     /* Create SWI for sending and receiving data */
     if (status == SYS_OK) {
-        swiAttrs.fxn     = rgb2ycbcr-dspSWI ;
+        swiAttrs.fxn     = rgb2ycbcr_dspSWI ;
         swiAttrs.arg0    = (Arg) info ;
         swiAttrs.mailbox = INITIAL_MAILBOX_VAL ;
         info->swi = SWI_create (&swiAttrs) ;
@@ -448,7 +448,7 @@ static Void writeFinishCb (Ptr arg, Int status, Ptr bufp, Uns size)
 
 
 /** ----------------------------------------------------------------------------
- *  @func   rgb2ycbcr-dspSWI
+ *  @func   rgb2ycbcr_dspSWI
  *
  *  @desc   SWI entry point. This SWI runs every time both IOM_READ and
  *          IOM_WRITE request get completed. It puts does processing and put
@@ -457,7 +457,7 @@ static Void writeFinishCb (Ptr arg, Int status, Ptr bufp, Uns size)
  *  @modif  None
  *  ----------------------------------------------------------------------------
  */
-static Void rgb2ycbcr-dspSWI (Arg arg0, Arg arg1)
+static Void rgb2ycbcr_dspSWI (Arg arg0, Arg arg1)
 {
     Int                    status          = SYS_OK;
     SWIRGB2YCBCR_DSP_TransferInfo * info            = (SWIRGB2YCBCR_DSP_TransferInfo *) arg0;
