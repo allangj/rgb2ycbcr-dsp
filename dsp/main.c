@@ -1,15 +1,14 @@
 /** ============================================================================
  *  @file   main.c
  *
- *  @path   $(DSPLINK)/dsp/src/samples/loop/
+ *  @path   $(DSPLINK)/dsp/src/samples/rgb2ycbcr-dsp/
  *
- *  @desc   Main function that calls SWI or TSK loopback applications based
+ *  @desc   Main function that calls SWI or TSK rgb2ycbcr-dsp applications based
  *          on the compilation flag SWI_MODE or TSK_MODE.
  *
  *  @ver    1.65.00.03
  *  ============================================================================
- *  Copyright (C) 2002-2009, Texas Instruments Incorporated -
- *  http://www.ti.com/
+ *  Copyright (C) 2015, Allan Granados
  *
  *  Redistribution and use in source and binary forms, with or without
  *  modification, are permitted provided that the following conditions
@@ -21,10 +20,6 @@
  *  *  Redistributions in binary form must reproduce the above copyright
  *     notice, this list of conditions and the following disclaimer in the
  *     documentation and/or other materials provided with the distribution.
- *  
- *  *  Neither the name of Texas Instruments Incorporated nor the names of
- *     its contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission.
  *  
  *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  *  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
@@ -63,9 +58,9 @@
 #endif /* if defined (CHNL_PCPY_LINK) */
 
 /*  ----------------------------------- Sample Headers              */
-#include <tskLoop.h>
-#include <swiLoop.h>
-#include <loop_config.h>
+#include <tskrgb2ycbcr-dsp.h>
+#include <swirgb2ycbcr-dsp.h>
+#include <rgb2ycbcr-dsp_config.h>
 
 
 /** ============================================================================
@@ -80,7 +75,7 @@
 /** ============================================================================
  *  @name   xferBufSize
  *
- *  @desc   Size of the buffer size for TSK based loopback.
+ *  @desc   Size of the buffer size for TSK.
  *  ============================================================================
  */
 Uint32 xferBufSize ;
@@ -335,7 +330,7 @@ static void HAL_initIsr (Ptr arg) ;
 /** ----------------------------------------------------------------------------
  *  @func   tskLoop
  *
- *  @desc   Task for TSK based TSKLOOP application.
+ *  @desc   Task for TSK based TSKRGB2YCBCR-DSP application.
  *
  *  @arg    None
  *
@@ -363,10 +358,10 @@ static Int tskLoop () ;
 Void main(Int argc, Char *argv[])
 {
 #if defined (SWI_MODE)
-    /* SWI based loopback */
-    SWILOOP_TransferInfo * info;
+    /* SWI based */
+    SWIRGB2YCBCR-DSP_TransferInfo * info;
 #else /* if defined (SWI_MODE) */
-    /* TSK based loopback */
+    /* TSK based */
     TSK_Handle tskLoopTask;
 #endif /* if defined (SWI_MODE) */
 #if defined (SWI_MODE) || defined (CHNL_PCPY_LINK)
@@ -388,23 +383,23 @@ Void main(Int argc, Char *argv[])
     /* Get the number of transfers to be done by the application */
     numTransfers = atoi (argv[1]) ;
 
-    /* Transfer size for loopback given by GPP side */
+    /* Transfer size given by GPP side */
     xferBufSize = DSPLINK_ALIGN ((atoi (argv[0]) / DSP_MAUSIZE),
                                   DSPLINK_BUF_ALIGN) ;
 #else
     /* Get the number of transfers to be done by the application */
     numTransfers = 10000 ;
 
-    /* Transfer size for loopback given by GPP side */
+    /* Transfer size for given by GPP side */
     xferBufSize = 1024 ;
 #endif
 #if defined (SWI_MODE)
-    /* Create phase of SWILOOP application */
-    status = SWILOOP_create(&info);
+    /* Create phase of SWIRGB2YCBCR-DSP application */
+    status = SWIRGB2YCBCR-DSP_create(&info);
     if (status == SYS_OK) {
 
-        /* Execute phase of SWILOOP application */
-        status = SWILOOP_execute(info);
+        /* Execute phase of SWIRGB2YCBCR-DSP application */
+        status = SWIRGB2YCBCR-DSP_execute(info);
         if (status != SYS_OK) {
             SET_FAILURE_REASON (status);
         }
@@ -413,23 +408,23 @@ Void main(Int argc, Char *argv[])
         SET_FAILURE_REASON (status);
     }
 
-    /* Delete phase of SWILOOP application: This is not called right now
+    /* Delete phase of SWIRGB2YCBCR-DSP application: This is not called right now
      * because SWI application runs forever
      */
     /*
-    deleteStatus = SWILOOP_delete(info);
+    deleteStatus = SWIRGB2YCBCR-DSP_delete(info);
     if (deleteStatus != SYS_OK) {
         SET_FAILURE_REASON (deleteStatus);
     }
     */
 #else /* if defined (SWI_MODE) */
-    /* Creating task for TSKLOOP application */
+    /* Creating task for TSKRGB2YCBCR-DSP application */
     tskLoopTask = TSK_create(tskLoop, NULL, 0);
     if (tskLoopTask != NULL) {
-        LOG_printf(&trace, "Create TSKLOOP: Success\n");
+        LOG_printf(&trace, "Create TSKRGB2YCBCR-DSP: Success\n");
     }
     else {
-        LOG_printf(&trace, "Create TSKLOOP: Failed.\n");
+        LOG_printf(&trace, "Create TSKRGB2YCBCR-DSP: Failed.\n");
         return;
     }
 #endif /* if defined (SWI_MODE) */
@@ -442,7 +437,7 @@ Void main(Int argc, Char *argv[])
 /** ----------------------------------------------------------------------------
  *  @func   tskLoop
  *
- *  @desc   Task for TSK based TSKLOOP application.
+ *  @desc   Task for TSK based TSKRGB2YCBCR-DSP application.
  *
  *  @modif  None
  *  ----------------------------------------------------------------------------
@@ -450,7 +445,7 @@ Void main(Int argc, Char *argv[])
 static Int tskLoop()
 {
     Int status = SYS_OK;
-    TSKLOOP_TransferInfo *info;
+    TSKRGB2YCBCR-DSP_TransferInfo *info;
 
 #if defined (DSP_BOOTMODE_NOBOOT)
     {
@@ -460,18 +455,18 @@ static Int tskLoop()
     DSPLINK_init () ;
 #endif
     /* Create Phase */
-    status = TSKLOOP_create (&info);
+    status = TSKRGB2YCBCR-DSP_create (&info);
 
     /* Execute Phase */
     if (status == SYS_OK) {
-        status = TSKLOOP_execute (info);
+        status = TSKRGB2YCBCR-DSP_execute (info);
         if (status != SYS_OK) {
             SET_FAILURE_REASON(status);
         }
     }
 
     /* Delete Phase */
-    status = TSKLOOP_delete (info);
+    status = TSKRGB2YCBCR-DSP_delete (info);
     if (status != SYS_OK) {
         SET_FAILURE_REASON(status);
     }

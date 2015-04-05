@@ -1,14 +1,13 @@
 #   ============================================================================
 #   @file   COMPONENT
 #
-#   @path   $(DSPLINK)/dsp/src/samples/loop/DspBios/
+#   @path   $(DSPLINK)/dsp/src/samples/rgb2ycbcr-dsp/DspBios/
 #
 #   @desc   This file contains information to build a component.
 #
 #   @ver    1.65.00.03
 #   ============================================================================
-#   Copyright (C) 2002-2009, Texas Instruments Incorporated -
-#   http://www.ti.com/
+#   Copyright (C) 2015, Allan Granados
 #
 #   Redistribution and use in source and binary forms, with or without
 #   modification, are permitted provided that the following conditions
@@ -20,10 +19,6 @@
 #   *  Redistributions in binary form must reproduce the above copyright
 #      notice, this list of conditions and the following disclaimer in the
 #      documentation and/or other materials provided with the distribution.
-#   
-#   *  Neither the name of Texas Instruments Incorporated nor the names of
-#      its contributors may be used to endorse or promote products derived
-#      from this software without specific prior written permission.
 #   
 #   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 #   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
@@ -43,17 +38,17 @@
 #   Generic information about the component
 #   ============================================================================
 
-COMP_NAME       := LOOP
-COMP_PATH       := $(TI_DSPLINK_DSPROOT)$(DIRSEP)src$(DIRSEP)samples$(DIRSEP)loop
+COMP_NAME       := RGB2YCBCR-DSP
+COMP_PATH       := $(TI_DSPLINK_DSPROOT)$(DIRSEP)src$(DIRSEP)samples$(DIRSEP)rgb2ycbcr-dsp
 COMP_TYPE       := EXE
-COMP_TARGET     := loop.out
+COMP_TARGET     := rgb2ycbcr-dsp.out
 
 
 #   ============================================================================
 #   MAP file name
 #   ============================================================================
 
-COMP_MAP_FILE   := loop.map
+COMP_MAP_FILE   := rgb2ycbcr-dsp.map
 
 
 #   ============================================================================
@@ -126,4 +121,4 @@ endif # ifeq ($(TI_DSPLINK_USE_RINGIO), 1)
 #   Target file(s) exported from this module
 #   ============================================================================
 
-EXP_TARGETS     := loop.out
+EXP_TARGETS     := rgb2ycbcr-dsp.out

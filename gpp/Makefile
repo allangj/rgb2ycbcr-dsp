@@ -1,15 +1,14 @@
 #   ============================================================================
 #   @file   Makefile
 #
-#   @path   $(DSPLINK)/gpp/src/samples/loop/
+#   @path   $(DSPLINK)/gpp/src/samples/rgb2ycbcr-dsp/
 #
 #   @desc   This file is a standard interface to the make scripts.
 #           Usually no change is required in this file.
 #
 #   @ver    1.65.00.03
 #   ============================================================================
-#   Copyright (C) 2002-2009, Texas Instruments Incorporated -
-#   http://www.ti.com/
+#   Copyright (C) 2015, Allan Granados
 #
 #   Redistribution and use in source and binary forms, with or without
 #   modification, are permitted provided that the following conditions
@@ -21,10 +20,6 @@
 #   *  Redistributions in binary form must reproduce the above copyright
 #      notice, this list of conditions and the following disclaimer in the
 #      documentation and/or other materials provided with the distribution.
-#   
-#   *  Neither the name of Texas Instruments Incorporated nor the names of
-#      its contributors may be used to endorse or promote products derived
-#      from this software without specific prior written permission.
 #   
 #   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
 #   AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
