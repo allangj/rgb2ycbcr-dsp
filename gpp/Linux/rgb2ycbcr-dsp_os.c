@@ -55,7 +55,7 @@ extern "C" {
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_0Print
+ *  @func   RGB2YCBCR_DSP_0Print
  *
  *  @desc   Print a message without any arguments.
  *
@@ -64,7 +64,7 @@ extern "C" {
  */
 NORMAL_API
 Void
-RGB2YCBCR-DSP_0Print (Char8 * str)
+RGB2YCBCR_DSP_0Print (Char8 * str)
 {
     printf (str) ;
     fflush (stdout) ;
@@ -72,7 +72,7 @@ RGB2YCBCR-DSP_0Print (Char8 * str)
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_1Print
+ *  @func   RGB2YCBCR_DSP_1Print
  *
  *  @desc   Print a message with one arguments.
  *
@@ -81,7 +81,7 @@ RGB2YCBCR-DSP_0Print (Char8 * str)
  */
 NORMAL_API
 Void
-RGB2YCBCR-DSP_1Print (Char8 * str, Uint32 arg)
+RGB2YCBCR_DSP_1Print (Char8 * str, Uint32 arg)
 {
     printf (str, arg) ;
     fflush (stdout) ;
@@ -89,7 +89,7 @@ RGB2YCBCR-DSP_1Print (Char8 * str, Uint32 arg)
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Atoll
+ *  @func   RGB2YCBCR_DSP_Atoll
  *
  *  @desc   Converts ascii to long int
  *
@@ -98,7 +98,7 @@ RGB2YCBCR-DSP_1Print (Char8 * str, Uint32 arg)
  */
 NORMAL_API
 Uint32
-RGB2YCBCR-DSP_Atoll (Char8 * str)
+RGB2YCBCR_DSP_Atoll (Char8 * str)
 {
      Uint32 val = 0 ;
      val = strtoll (str, NULL, 16) ;

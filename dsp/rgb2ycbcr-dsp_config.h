@@ -3,7 +3,7 @@
  *
  *  @path   $(DSPLINK)/dsp/src/samples/rgb2ycbcr-dsp/
  *
- *  @desc   Header file containing configuration for the RGB2YCBCR-DSP app.
+ *  @desc   Header file containing configuration for the RGB2YCBCR_DSP app.
  *
  *  @ver    1.65.00.03
  *  ============================================================================
@@ -35,8 +35,8 @@
  */
 
 
-#if !defined (RGB2YCBCR-DSP_CONFIG_)
-#define RGB2YCBCR-DSP_CONFIG_
+#if !defined (RGB2YCBCR_DSP_CONFIG_)
+#define RGB2YCBCR_DSP_CONFIG_
 
 
 #if defined (__cplusplus)
@@ -160,12 +160,12 @@ extern "C" {
 extern POOL_Config  * POOL ;
 
 /** ============================================================================
- *  @name   RGB2YCBCR-DSP_Pools
+ *  @name   RGB2YCBCR_DSP_Pools
  *
  *  @desc   Array of pools.
  *  ============================================================================
  */
-extern POOL_Obj RGB2YCBCR-DSP_Pools [] ;
+extern POOL_Obj RGB2YCBCR_DSP_Pools [] ;
 #endif /* if defined (CHNL_PCPY_LINK) */
 
 
@@ -174,4 +174,4 @@ extern POOL_Obj RGB2YCBCR-DSP_Pools [] ;
 #endif /* defined (__cplusplus) */
 
 
-#endif /* !defined (RGB2YCBCR-DSP_CONFIG_) */
+#endif /* !defined (RGB2YCBCR_DSP_CONFIG_) */

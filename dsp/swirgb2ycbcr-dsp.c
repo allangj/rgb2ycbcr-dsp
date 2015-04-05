@@ -187,20 +187,20 @@ static Void rgb2ycbcr-dspSWI (Arg arg0, Arg arg1) ;
 
 
 /** ============================================================================
- *  @func   SWIRGB2YCBCR-DSP_create
+ *  @func   SWIRGB2YCBCR_DSP_create
  *
- *  @desc   Create phase of SWISWIRGB2YCBCR-DSP application. It allocates
- *          SWISWIRGB2YCBCR-DSP_TransferInfo structure and intializes it with configured
+ *  @desc   Create phase of SWISWIRGB2YCBCR_DSP application. It allocates
+ *          SWISWIRGB2YCBCR_DSP_TransferInfo structure and intializes it with configured
  *          values.
  *
  *  @modif  None.
  *  ============================================================================
  */
-Int SWIRGB2YCBCR-DSP_create (SWIRGB2YCBCR-DSP_TransferInfo ** infoPtr)
+Int SWIRGB2YCBCR_DSP_create (SWIRGB2YCBCR_DSP_TransferInfo ** infoPtr)
 {
     Int                     status      = SYS_OK ;
     SWI_Attrs               swiAttrs    = SWI_ATTRS ;
-    SWIRGB2YCBCR-DSP_TransferInfo *  info;
+    SWIRGB2YCBCR_DSP_TransferInfo *  info;
 #if  defined (DSP_BOOTMODE_NOBOOT)
     POOL_Obj                poolObj ;
 
@@ -225,9 +225,9 @@ Int SWIRGB2YCBCR-DSP_create (SWIRGB2YCBCR-DSP_TransferInfo ** infoPtr)
     status = DEV_createDevice("/dio_dsplink", &DIO_tskDynamicFxns, NULL, &dioDevAttrs);
 #endif
 
-    /* Allocate SWIRGB2YCBCR-DSP_TransferInfo structure */
+    /* Allocate SWIRGB2YCBCR_DSP_TransferInfo structure */
     *infoPtr = MEM_calloc (DSPLINK_SEGID,
-                           sizeof (SWIRGB2YCBCR-DSP_TransferInfo),
+                           sizeof (SWIRGB2YCBCR_DSP_TransferInfo),
                            DSPLINK_BUF_ALIGN) ;
     if (*infoPtr == NULL) {
         status = SYS_EALLOC ;
@@ -237,7 +237,7 @@ Int SWIRGB2YCBCR-DSP_create (SWIRGB2YCBCR-DSP_TransferInfo ** infoPtr)
         info = *infoPtr ;
     }
 
-    /* Initialize SWIRGB2YCBCR-DSP_TransferInfo structure */
+    /* Initialize SWIRGB2YCBCR_DSP_TransferInfo structure */
     if (status == SYS_OK) {
         info->bufferSize = xferBufSize ;
         (info->appReadCb).fxn  = readFinishCb ;
@@ -301,15 +301,15 @@ Int SWIRGB2YCBCR-DSP_create (SWIRGB2YCBCR-DSP_TransferInfo ** infoPtr)
 
 
 /** ============================================================================
- *  @func   SWIRGB2YCBCR-DSP_execute
+ *  @func   SWIRGB2YCBCR_DSP_execute
  *
- *  @desc   Execute phase of SWIRGB2YCBCR-DSP application. It get the application
+ *  @desc   Execute phase of SWIRGB2YCBCR_DSP application. It get the application
  *          started after that SWIs get posted automatically.
  *
  *  @modif  None.
  *  ============================================================================
  */
-Int SWIRGB2YCBCR-DSP_execute (SWIRGB2YCBCR-DSP_TransferInfo * info)
+Int SWIRGB2YCBCR_DSP_execute (SWIRGB2YCBCR_DSP_TransferInfo * info)
 {
     Int status = SYS_OK ;
     Int iomStatus ;
@@ -335,15 +335,15 @@ Int SWIRGB2YCBCR-DSP_execute (SWIRGB2YCBCR-DSP_TransferInfo * info)
 
 
 /** ============================================================================
- *  @func   SWIRGB2YCBCR-DSP_delete
+ *  @func   SWIRGB2YCBCR_DSP_delete
  *
- *  @desc   Delete phase of SWIRGB2YCBCR-DSP application. Deallocates all the
+ *  @desc   Delete phase of SWIRGB2YCBCR_DSP application. Deallocates all the
  *          resources that were allocated during create phase.
  *
  *  @modif  None.
  *  ============================================================================
  */
-Int SWIRGB2YCBCR-DSP_delete (SWIRGB2YCBCR-DSP_TransferInfo * info)
+Int SWIRGB2YCBCR_DSP_delete (SWIRGB2YCBCR_DSP_TransferInfo * info)
 {
     Int status = SYS_OK ;
     Int iomStatus ;
@@ -383,7 +383,7 @@ Int SWIRGB2YCBCR-DSP_delete (SWIRGB2YCBCR-DSP_TransferInfo * info)
         }
 
         /* Deallocate info structure */
-        if (!MEM_free (DSPLINK_SEGID, info, sizeof (SWIRGB2YCBCR-DSP_TransferInfo))) {
+        if (!MEM_free (DSPLINK_SEGID, info, sizeof (SWIRGB2YCBCR_DSP_TransferInfo))) {
             status = SYS_EALLOC ;
             SET_FAILURE_REASON (status) ;
         }
@@ -407,7 +407,7 @@ Int SWIRGB2YCBCR-DSP_delete (SWIRGB2YCBCR-DSP_TransferInfo * info)
  */
 static Void readFinishCb (Ptr arg, Int status, Ptr bufp, Uns size)
 {
-    SWIRGB2YCBCR-DSP_TransferInfo * info = (SWIRGB2YCBCR-DSP_TransferInfo *) arg ;
+    SWIRGB2YCBCR_DSP_TransferInfo * info = (SWIRGB2YCBCR_DSP_TransferInfo *) arg ;
 
     /* Received full buffer from the GPP */
     info->inputBuffer = bufp ;
@@ -432,7 +432,7 @@ static Void readFinishCb (Ptr arg, Int status, Ptr bufp, Uns size)
  */
 static Void writeFinishCb (Ptr arg, Int status, Ptr bufp, Uns size)
 {
-    SWIRGB2YCBCR-DSP_TransferInfo *info = (SWIRGB2YCBCR-DSP_TransferInfo *) arg ;
+    SWIRGB2YCBCR_DSP_TransferInfo *info = (SWIRGB2YCBCR_DSP_TransferInfo *) arg ;
 
     (Void) size ; /* To remove compiler warning */
 
@@ -460,7 +460,7 @@ static Void writeFinishCb (Ptr arg, Int status, Ptr bufp, Uns size)
 static Void rgb2ycbcr-dspSWI (Arg arg0, Arg arg1)
 {
     Int                    status          = SYS_OK;
-    SWIRGB2YCBCR-DSP_TransferInfo * info            = (SWIRGB2YCBCR-DSP_TransferInfo *) arg0;
+    SWIRGB2YCBCR_DSP_TransferInfo * info            = (SWIRGB2YCBCR_DSP_TransferInfo *) arg0;
     Uns                    numWordsToWrite = info->readWords;
     Int                    iomStatus;
     Uns i;

@@ -38,7 +38,7 @@
 #   Generic information about the component
 #   ============================================================================
 
-COMP_NAME       := RGB2YCBCR-DSP
+COMP_NAME       := RGB2YCBCR_DSP
 COMP_PATH       := $(TI_DSPLINK_DSPROOT)$(DIRSEP)src$(DIRSEP)samples$(DIRSEP)rgb2ycbcr-dsp
 COMP_TYPE       := EXE
 COMP_TARGET     := rgb2ycbcr-dsp.out

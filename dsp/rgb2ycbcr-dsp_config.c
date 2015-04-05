@@ -3,7 +3,7 @@
  *
  *  @path   $(DSPLINK)/dsp/src/samples/rgb2ycbcr-dsp/
  *
- *  @desc   Source file containing configuration for the RGB2YCBCR-DSP app.
+ *  @desc   Source file containing configuration for the RGB2YCBCR_DSP app.
  *
  *  @ver    1.65.00.03
  *  ============================================================================
@@ -108,12 +108,12 @@ SMAPOOL_Params SamplePoolParams =
 
 
 /** ============================================================================
- *  @name   RGB2YCBCR-DSP_Pools
+ *  @name   RGB2YCBCR_DSP_Pools
  *
  *  @desc   Array of pools.
  *  ============================================================================
  */
-POOL_Obj RGB2YCBCR-DSP_Pools [NUM_POOLS] =
+POOL_Obj RGB2YCBCR_DSP_Pools [NUM_POOLS] =
 {
 #if defined (DSP_BOOTMODE_NOBOOT)
     POOL_NOENTRY
@@ -137,7 +137,7 @@ POOL_Obj RGB2YCBCR-DSP_Pools [NUM_POOLS] =
  *          POOL_config is a required global variable.
  *  ============================================================================
  */
-POOL_Config POOL_config = {RGB2YCBCR-DSP_Pools, NUM_POOLS} ;
+POOL_Config POOL_config = {RGB2YCBCR_DSP_Pools, NUM_POOLS} ;
 
 
 #if defined (__cplusplus)

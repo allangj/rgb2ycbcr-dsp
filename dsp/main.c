@@ -330,7 +330,7 @@ static void HAL_initIsr (Ptr arg) ;
 /** ----------------------------------------------------------------------------
  *  @func   tskLoop
  *
- *  @desc   Task for TSK based TSKRGB2YCBCR-DSP application.
+ *  @desc   Task for TSK based TSKRGB2YCBCR_DSP application.
  *
  *  @arg    None
  *
@@ -359,7 +359,7 @@ Void main(Int argc, Char *argv[])
 {
 #if defined (SWI_MODE)
     /* SWI based */
-    SWIRGB2YCBCR-DSP_TransferInfo * info;
+    SWIRGB2YCBCR_DSP_TransferInfo * info;
 #else /* if defined (SWI_MODE) */
     /* TSK based */
     TSK_Handle tskLoopTask;
@@ -394,12 +394,12 @@ Void main(Int argc, Char *argv[])
     xferBufSize = 1024 ;
 #endif
 #if defined (SWI_MODE)
-    /* Create phase of SWIRGB2YCBCR-DSP application */
-    status = SWIRGB2YCBCR-DSP_create(&info);
+    /* Create phase of SWIRGB2YCBCR_DSP application */
+    status = SWIRGB2YCBCR_DSP_create(&info);
     if (status == SYS_OK) {
 
-        /* Execute phase of SWIRGB2YCBCR-DSP application */
-        status = SWIRGB2YCBCR-DSP_execute(info);
+        /* Execute phase of SWIRGB2YCBCR_DSP application */
+        status = SWIRGB2YCBCR_DSP_execute(info);
         if (status != SYS_OK) {
             SET_FAILURE_REASON (status);
         }
@@ -408,23 +408,23 @@ Void main(Int argc, Char *argv[])
         SET_FAILURE_REASON (status);
     }
 
-    /* Delete phase of SWIRGB2YCBCR-DSP application: This is not called right now
+    /* Delete phase of SWIRGB2YCBCR_DSP application: This is not called right now
      * because SWI application runs forever
      */
     /*
-    deleteStatus = SWIRGB2YCBCR-DSP_delete(info);
+    deleteStatus = SWIRGB2YCBCR_DSP_delete(info);
     if (deleteStatus != SYS_OK) {
         SET_FAILURE_REASON (deleteStatus);
     }
     */
 #else /* if defined (SWI_MODE) */
-    /* Creating task for TSKRGB2YCBCR-DSP application */
+    /* Creating task for TSKRGB2YCBCR_DSP application */
     tskLoopTask = TSK_create(tskLoop, NULL, 0);
     if (tskLoopTask != NULL) {
-        LOG_printf(&trace, "Create TSKRGB2YCBCR-DSP: Success\n");
+        LOG_printf(&trace, "Create TSKRGB2YCBCR_DSP: Success\n");
     }
     else {
-        LOG_printf(&trace, "Create TSKRGB2YCBCR-DSP: Failed.\n");
+        LOG_printf(&trace, "Create TSKRGB2YCBCR_DSP: Failed.\n");
         return;
     }
 #endif /* if defined (SWI_MODE) */
@@ -437,7 +437,7 @@ Void main(Int argc, Char *argv[])
 /** ----------------------------------------------------------------------------
  *  @func   tskLoop
  *
- *  @desc   Task for TSK based TSKRGB2YCBCR-DSP application.
+ *  @desc   Task for TSK based TSKRGB2YCBCR_DSP application.
  *
  *  @modif  None
  *  ----------------------------------------------------------------------------
@@ -445,7 +445,7 @@ Void main(Int argc, Char *argv[])
 static Int tskLoop()
 {
     Int status = SYS_OK;
-    TSKRGB2YCBCR-DSP_TransferInfo *info;
+    TSKRGB2YCBCR_DSP_TransferInfo *info;
 
 #if defined (DSP_BOOTMODE_NOBOOT)
     {
@@ -455,18 +455,18 @@ static Int tskLoop()
     DSPLINK_init () ;
 #endif
     /* Create Phase */
-    status = TSKRGB2YCBCR-DSP_create (&info);
+    status = TSKRGB2YCBCR_DSP_create (&info);
 
     /* Execute Phase */
     if (status == SYS_OK) {
-        status = TSKRGB2YCBCR-DSP_execute (info);
+        status = TSKRGB2YCBCR_DSP_execute (info);
         if (status != SYS_OK) {
             SET_FAILURE_REASON(status);
         }
     }
 
     /* Delete Phase */
-    status = TSKRGB2YCBCR-DSP_delete (info);
+    status = TSKRGB2YCBCR_DSP_delete (info);
     if (status != SYS_OK) {
         SET_FAILURE_REASON(status);
     }

@@ -99,38 +99,38 @@ extern "C" {
 
 
 /*  ============================================================================
- *  @name   RGB2YCBCR-DSP_BufferSize
+ *  @name   RGB2YCBCR_DSP_BufferSize
  *
  *  @desc   Size of buffer to be used for data transfer.
  *  ============================================================================
  */
-STATIC Uint32  RGB2YCBCR-DSP_BufferSize ;
+STATIC Uint32  RGB2YCBCR_DSP_BufferSize ;
 
 /*  ============================================================================
- *  @name   RGB2YCBCR-DSP_NumIterations
+ *  @name   RGB2YCBCR_DSP_NumIterations
  *
  *  @desc   Number of iterations of data transfer.
- *          A value of 0 in RGB2YCBCR-DSP_NumIterations implies infinite iterations.
+ *          A value of 0 in RGB2YCBCR_DSP_NumIterations implies infinite iterations.
  *  ============================================================================
  */
-STATIC Uint32  RGB2YCBCR-DSP_NumIterations ;
+STATIC Uint32  RGB2YCBCR_DSP_NumIterations ;
 
 /** ============================================================================
- *  @name   RGB2YCBCR-DSP_Buffers
+ *  @name   RGB2YCBCR_DSP_Buffers
  *
  *  @desc   Array of buffers used by the rgb2ycbcr-dsp application.
  *          Length of array in this application is 1.
  *  ============================================================================
  */
-STATIC Char8 * RGB2YCBCR-DSP_Buffers [1] ;
+STATIC Char8 * RGB2YCBCR_DSP_Buffers [1] ;
 
 /** ============================================================================
- *  @name   RGB2YCBCR-DSP_IOReq
+ *  @name   RGB2YCBCR_DSP_IOReq
  *
  *  @desc   It gives information for adding or reclaiming a request.
  *  ============================================================================
  */
-STATIC ChannelIOInfo RGB2YCBCR-DSP_IOReq  ;
+STATIC ChannelIOInfo RGB2YCBCR_DSP_IOReq  ;
 
 #if defined (DA8XXGEM)
 /** ============================================================================
@@ -139,7 +139,7 @@ STATIC ChannelIOInfo RGB2YCBCR-DSP_IOReq  ;
  *  @desc   Address of c_int00 in the DSP executable.
  *  ============================================================================
  */
-Uint32 RGB2YCBCR-DSP_dspAddr ;
+Uint32 RGB2YCBCR_DSP_dspAddr ;
 
 /** ============================================================================
  *  @name   shmAddr
@@ -147,7 +147,7 @@ Uint32 RGB2YCBCR-DSP_dspAddr ;
  *  @desc   Address of symbol DSPLINK_shmBaseAddres in the DSP executable.
  *  ============================================================================
  */
-Uint32 RGB2YCBCR-DSP_shmAddr ;
+Uint32 RGB2YCBCR_DSP_shmAddr ;
 
 /** ============================================================================
  *  @name   argsAddr
@@ -155,7 +155,7 @@ Uint32 RGB2YCBCR-DSP_shmAddr ;
  *  @desc   Address of .args section in the DSP executable.
  *  ============================================================================
  */
-Uint32 RGB2YCBCR-DSP_argsAddr ;
+Uint32 RGB2YCBCR_DSP_argsAddr ;
 
 /** ============================================================================
  *  @name   LINKCFG_config
@@ -171,7 +171,7 @@ extern  LINKCFG_Object LINKCFG_config ;
 
 #if defined (VERIFY_DATA)
 /** ----------------------------------------------------------------------------
- *  @func   RGB2YCBCR-DSP_VerifyData
+ *  @func   RGB2YCBCR_DSP_VerifyData
  *
  *  @desc   This function verifies the data-integrity of given buffer.
  *
@@ -195,23 +195,23 @@ extern  LINKCFG_Object LINKCFG_config ;
 STATIC
 NORMAL_API
 DSP_STATUS
-RGB2YCBCR-DSP_VerifyData (IN Char8 * buf) ;
+RGB2YCBCR_DSP_VerifyData (IN Char8 * buf) ;
 #endif /*  defined (VERIFY_DATA) */
 
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Create
+ *  @func   RGB2YCBCR_DSP_Create
  *
  *  @desc   This function allocates and initializes resources used by
  *          this application.
  *
- *  @modif  RGB2YCBCR-DSP_Buffers
+ *  @modif  RGB2YCBCR_DSP_Buffers
  *  ============================================================================
  */
 NORMAL_API
 DSP_STATUS
-RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
+RGB2YCBCR_DSP_Create (IN Char8 * dspExecutable,
              IN Char8 * strBufferSize,
              IN Char8 * strNumIterations,
              IN Uint8   processorId)
@@ -233,7 +233,7 @@ RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
     SMAPOOL_Attrs poolAttrs                ;
 #endif /* if defined (ZCPY_LINK) */
 
-    RGB2YCBCR-DSP_0Print ("Entered RGB2YCBCR-DSP_Create ()\n") ;
+    RGB2YCBCR_DSP_0Print ("Entered RGB2YCBCR_DSP_Create ()\n") ;
 
     /*
      *  Create and initialize the proc object.
@@ -246,18 +246,18 @@ RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
     if (DSP_SUCCEEDED (status)) {
         status = PROC_attach (processorId, NULL) ;
         if (DSP_FAILED (status)) {
-            RGB2YCBCR-DSP_1Print ("PROC_attach failed . Status = [0x%x]\n", status) ;
+            RGB2YCBCR_DSP_1Print ("PROC_attach failed . Status = [0x%x]\n", status) ;
         }
     }
     else {
-        RGB2YCBCR-DSP_1Print ("PROC_setup failed. Status =  [0x%x]\n", status) ;
+        RGB2YCBCR_DSP_1Print ("PROC_setup failed. Status =  [0x%x]\n", status) ;
     }
 
     /*
      *  Open the pool.
      */
     if (DSP_SUCCEEDED (status)) {
-        size [0] = RGB2YCBCR-DSP_BufferSize ;
+        size [0] = RGB2YCBCR_DSP_BufferSize ;
         poolAttrs.bufSizes      = (Uint32 *) &size ;
         poolAttrs.numBuffers    = (Uint32 *) &numBufs ;
         poolAttrs.numBufPools   = NUMBUFFERPOOLS ;
@@ -266,7 +266,7 @@ RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
 #endif /* if defined (ZCPY_LINK) */
         status = POOL_open (POOL_makePoolId(processorId, POOL_ID), &poolAttrs) ;
         if (DSP_FAILED (status)) {
-            RGB2YCBCR-DSP_1Print ("POOL_open () failed. Status = [0x%x]\n",
+            RGB2YCBCR_DSP_1Print ("POOL_open () failed. Status = [0x%x]\n",
                             status) ;
         }
     }
@@ -282,9 +282,9 @@ RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
 #if defined (DA8XXGEM)
          if (LINKCFG_config.dspConfigs [processorId]->dspObject->doDspCtrl ==
                      DSP_BootMode_NoBoot) {
-            imageInfo.dspRunAddr  = RGB2YCBCR-DSP_dspAddr ;
-            imageInfo.shmBaseAddr = RGB2YCBCR-DSP_shmAddr ;
-            imageInfo.argsAddr    = RGB2YCBCR-DSP_argsAddr ;
+            imageInfo.dspRunAddr  = RGB2YCBCR_DSP_dspAddr ;
+            imageInfo.shmBaseAddr = RGB2YCBCR_DSP_shmAddr ;
+            imageInfo.argsAddr    = RGB2YCBCR_DSP_argsAddr ;
             imageInfo.argsSize    = 50         ;
             status = PROC_load (processorId, (Char8 *) &imageInfo, numArgs, args) ;
         }
@@ -294,7 +294,7 @@ RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
             status = PROC_load (processorId, dspExecutable, numArgs, args) ;
         }
         if (DSP_FAILED (status)) {
-            RGB2YCBCR-DSP_1Print ("PROC_load failed. Status = [0x%x]\n", status) ;
+            RGB2YCBCR_DSP_1Print ("PROC_load failed. Status = [0x%x]\n", status) ;
         }
     }
 
@@ -308,7 +308,7 @@ RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
 
         status = CHNL_create (processorId, CHNL_ID_OUTPUT, &chnlAttrOutput) ;
         if (DSP_FAILED (status)) {
-            RGB2YCBCR-DSP_1Print ("CHNL_create failed (output). Status = [0x%x]\n",
+            RGB2YCBCR_DSP_1Print ("CHNL_create failed (output). Status = [0x%x]\n",
                          status) ;
         }
     }
@@ -323,7 +323,7 @@ RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
 
         status = CHNL_create (processorId, CHNL_ID_INPUT, &chnlAttrInput) ;
         if (DSP_FAILED (status)) {
-            RGB2YCBCR-DSP_1Print ("CHNL_create failed (input). Status = [0x%x]\n",
+            RGB2YCBCR_DSP_1Print ("CHNL_create failed (input). Status = [0x%x]\n",
                          status) ;
         }
     }
@@ -334,11 +334,11 @@ RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
     if (DSP_SUCCEEDED (status)) {
         status = CHNL_allocateBuffer (processorId,
                                       CHNL_ID_OUTPUT,
-                                      RGB2YCBCR-DSP_Buffers,
-                                      RGB2YCBCR-DSP_BufferSize ,
+                                      RGB2YCBCR_DSP_Buffers,
+                                      RGB2YCBCR_DSP_BufferSize ,
                                       1) ;
         if (DSP_FAILED (status)) {
-            RGB2YCBCR-DSP_1Print ("CHNL_allocateBuffer failed (output)."
+            RGB2YCBCR_DSP_1Print ("CHNL_allocateBuffer failed (output)."
                          " Status = [0x%x]\n",
                          status) ;
         }
@@ -348,21 +348,21 @@ RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
      *  Initialize the buffer with valid data.
      */
     if (DSP_SUCCEEDED (status)) {
-        temp = RGB2YCBCR-DSP_Buffers [0] ;
+        temp = RGB2YCBCR_DSP_Buffers [0] ;
 
-        for (i = 0 ; i < RGB2YCBCR-DSP_BufferSize ; i++) {
+        for (i = 0 ; i < RGB2YCBCR_DSP_BufferSize ; i++) {
             *temp++ = XFER_CHAR ;
         }
     }
 
-    RGB2YCBCR-DSP_0Print ("Leaving RGB2YCBCR-DSP_Create ()\n") ;
+    RGB2YCBCR_DSP_0Print ("Leaving RGB2YCBCR_DSP_Create ()\n") ;
 
     return status ;
 }
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Execute
+ *  @func   RGB2YCBCR_DSP_Execute
  *
  *  @desc   This function implements the execute phase for this application.
  *
@@ -371,12 +371,12 @@ RGB2YCBCR-DSP_Create (IN Char8 * dspExecutable,
  */
 NORMAL_API
 DSP_STATUS
-RGB2YCBCR-DSP_Execute (IN Uint32 numIterations, Uint8 processorId)
+RGB2YCBCR_DSP_Execute (IN Uint32 numIterations, Uint8 processorId)
 {
     DSP_STATUS status = DSP_SOK ;
     Uint32     i ;
 
-    RGB2YCBCR-DSP_0Print ("Entered RGB2YCBCR-DSP_Execute ()\n") ;
+    RGB2YCBCR_DSP_0Print ("Entered RGB2YCBCR_DSP_Execute ()\n") ;
 
     /*
      *  Start execution on DSP.
@@ -388,24 +388,24 @@ RGB2YCBCR-DSP_Execute (IN Uint32 numIterations, Uint8 processorId)
      *  It gives Information for adding or reclaiming an input request.
      */
     if (DSP_SUCCEEDED (status)) {
-        RGB2YCBCR-DSP_IOReq.buffer = RGB2YCBCR-DSP_Buffers [0] ;
-        RGB2YCBCR-DSP_IOReq.size   = RGB2YCBCR-DSP_BufferSize   ;
+        RGB2YCBCR_DSP_IOReq.buffer = RGB2YCBCR_DSP_Buffers [0] ;
+        RGB2YCBCR_DSP_IOReq.size   = RGB2YCBCR_DSP_BufferSize   ;
     }
     else {
-        RGB2YCBCR-DSP_1Print ("PROC_start failed. Status = [0x%x]\n", status) ;
+        RGB2YCBCR_DSP_1Print ("PROC_start failed. Status = [0x%x]\n", status) ;
     }
 
     for (i = 1 ;
-         (   (RGB2YCBCR-DSP_NumIterations == 0) || (i <= RGB2YCBCR-DSP_NumIterations))
+         (   (RGB2YCBCR_DSP_NumIterations == 0) || (i <= RGB2YCBCR_DSP_NumIterations))
           && (DSP_SUCCEEDED (status)) ;
          i++) {
         /*
          *  Send data to DSP.
          *  Issue 'filled' buffer to the channel.
          */
-        status = CHNL_issue (processorId, CHNL_ID_OUTPUT, &RGB2YCBCR-DSP_IOReq) ;
+        status = CHNL_issue (processorId, CHNL_ID_OUTPUT, &RGB2YCBCR_DSP_IOReq) ;
         if (DSP_FAILED (status)) {
-            RGB2YCBCR-DSP_1Print ("CHNL_issue failed (output). Status = [0x%x]\n",
+            RGB2YCBCR_DSP_1Print ("CHNL_issue failed (output). Status = [0x%x]\n",
                           status) ;
         }
 
@@ -416,9 +416,9 @@ RGB2YCBCR-DSP_Execute (IN Uint32 numIterations, Uint8 processorId)
             status = CHNL_reclaim (processorId,
                                    CHNL_ID_OUTPUT,
                                    WAIT_FOREVER,
-                                   &RGB2YCBCR-DSP_IOReq) ;
+                                   &RGB2YCBCR_DSP_IOReq) ;
             if (DSP_FAILED (status)) {
-                RGB2YCBCR-DSP_1Print ("CHNL_reclaim failed (output). Status = [0x%x]\n",
+                RGB2YCBCR_DSP_1Print ("CHNL_reclaim failed (output). Status = [0x%x]\n",
                              status) ;
             }
         }
@@ -428,9 +428,9 @@ RGB2YCBCR-DSP_Execute (IN Uint32 numIterations, Uint8 processorId)
          *  Issue 'empty' buffer to the channel.
          */
         if (DSP_SUCCEEDED (status)) {
-            status = CHNL_issue (processorId, CHNL_ID_INPUT, &RGB2YCBCR-DSP_IOReq) ;
+            status = CHNL_issue (processorId, CHNL_ID_INPUT, &RGB2YCBCR_DSP_IOReq) ;
             if (DSP_FAILED (status)) {
-                RGB2YCBCR-DSP_1Print ("CHNL_issue failed (input). Status = [0x%x]\n",
+                RGB2YCBCR_DSP_1Print ("CHNL_issue failed (input). Status = [0x%x]\n",
                              status) ;
             }
         }
@@ -442,9 +442,9 @@ RGB2YCBCR-DSP_Execute (IN Uint32 numIterations, Uint8 processorId)
             status = CHNL_reclaim (processorId,
                                    CHNL_ID_INPUT,
                                    WAIT_FOREVER,
-                                   &RGB2YCBCR-DSP_IOReq) ;
+                                   &RGB2YCBCR_DSP_IOReq) ;
             if (DSP_FAILED (status)) {
-                RGB2YCBCR-DSP_1Print ("CHNL_reclaim failed (input). Status = [0x%x]\n",
+                RGB2YCBCR_DSP_1Print ("CHNL_reclaim failed (input). Status = [0x%x]\n",
                              status) ;
             }
         }
@@ -454,54 +454,54 @@ RGB2YCBCR-DSP_Execute (IN Uint32 numIterations, Uint8 processorId)
          *  Verify correctness of data received.
          */
         if (DSP_SUCCEEDED (status)) {
-            status = RGB2YCBCR-DSP_VerifyData (RGB2YCBCR-DSP_IOReq.buffer) ;
+            status = RGB2YCBCR_DSP_VerifyData (RGB2YCBCR_DSP_IOReq.buffer) ;
             if (DSP_FAILED (status)) {
-                RGB2YCBCR-DSP_0Print ("Data integrity failed\n") ;
+                RGB2YCBCR_DSP_0Print ("Data integrity failed\n") ;
             }
         }
 #endif
 
         if (DSP_SUCCEEDED (status) && (i % 1000) == 0) {
-            RGB2YCBCR-DSP_1Print ("Transferred %ld buffers\n", i) ;
+            RGB2YCBCR_DSP_1Print ("Transferred %ld buffers\n", i) ;
         }
     }
 
-    RGB2YCBCR-DSP_0Print ("Leaving RGB2YCBCR-DSP_Execute ()\n") ;
+    RGB2YCBCR_DSP_0Print ("Leaving RGB2YCBCR_DSP_Execute ()\n") ;
 
     return status ;
 }
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Delete
+ *  @func   RGB2YCBCR_DSP_Delete
  *
  *  @desc   This function releases resources allocated earlier by call to
- *          RGB2YCBCR-DSP_Create ().
+ *          RGB2YCBCR_DSP_Create ().
  *          During cleanup, the allocated resources are being freed
  *          unconditionally. Actual applications may require stricter check
  *          against return values for robustness.
  *
- *  @modif  RGB2YCBCR-DSP_Buffers
+ *  @modif  RGB2YCBCR_DSP_Buffers
  *  ============================================================================
  */
 NORMAL_API
 Void
-RGB2YCBCR-DSP_Delete (Uint8 processorId)
+RGB2YCBCR_DSP_Delete (Uint8 processorId)
 {
     DSP_STATUS status    = DSP_SOK ;
     DSP_STATUS tmpStatus = DSP_SOK ;
 
-    RGB2YCBCR-DSP_0Print ("Entered RGB2YCBCR-DSP_Delete ()\n") ;
+    RGB2YCBCR_DSP_0Print ("Entered RGB2YCBCR_DSP_Delete ()\n") ;
 
     /*
      *  Free the buffer(s) allocated for channel to DSP
      */
     tmpStatus = CHNL_freeBuffer (processorId,
                                  CHNL_ID_OUTPUT,
-                                 RGB2YCBCR-DSP_Buffers,
+                                 RGB2YCBCR_DSP_Buffers,
                                  1) ;
     if (DSP_SUCCEEDED (status) && DSP_FAILED (tmpStatus)) {
-        RGB2YCBCR-DSP_1Print ("CHNL_freeBuffer () failed (output). Status = [0x%x]\n",
+        RGB2YCBCR_DSP_1Print ("CHNL_freeBuffer () failed (output). Status = [0x%x]\n",
                      tmpStatus) ;
     }
 
@@ -510,12 +510,12 @@ RGB2YCBCR-DSP_Delete (Uint8 processorId)
      */
     tmpStatus = CHNL_delete  (processorId, CHNL_ID_INPUT) ;
     if (DSP_SUCCEEDED (status) && DSP_FAILED (tmpStatus)) {
-        RGB2YCBCR-DSP_1Print ("CHNL_delete () failed (input). Status = [0x%x]\n",
+        RGB2YCBCR_DSP_1Print ("CHNL_delete () failed (input). Status = [0x%x]\n",
                      tmpStatus) ;
     }
     tmpStatus = CHNL_delete  (processorId, CHNL_ID_OUTPUT) ;
     if (DSP_SUCCEEDED (status) && DSP_FAILED (tmpStatus)) {
-        RGB2YCBCR-DSP_1Print ("CHNL_delete () failed (output). Status = [0x%x]\n",
+        RGB2YCBCR_DSP_1Print ("CHNL_delete () failed (output). Status = [0x%x]\n",
                      tmpStatus) ;
     }
 
@@ -529,7 +529,7 @@ RGB2YCBCR-DSP_Delete (Uint8 processorId)
      */
     tmpStatus = POOL_close (POOL_makePoolId(processorId, POOL_ID)) ;
     if (DSP_SUCCEEDED (status) && DSP_FAILED (tmpStatus)) {
-        RGB2YCBCR-DSP_1Print ("POOL_close () failed. Status = [0x%x]\n",
+        RGB2YCBCR_DSP_1Print ("POOL_close () failed. Status = [0x%x]\n",
                         tmpStatus) ;
     }
 
@@ -538,7 +538,7 @@ RGB2YCBCR-DSP_Delete (Uint8 processorId)
      */
     tmpStatus = PROC_detach  (processorId) ;
     if (DSP_SUCCEEDED (status) && DSP_FAILED (tmpStatus)) {
-        RGB2YCBCR-DSP_1Print ("PROC_detach () failed. Status = [0x%x]\n", tmpStatus) ;
+        RGB2YCBCR_DSP_1Print ("PROC_detach () failed. Status = [0x%x]\n", tmpStatus) ;
     }
 
     /*
@@ -546,15 +546,15 @@ RGB2YCBCR-DSP_Delete (Uint8 processorId)
      */
     tmpStatus = PROC_destroy () ;
     if (DSP_SUCCEEDED (status) && DSP_FAILED (tmpStatus)) {
-        RGB2YCBCR-DSP_1Print ("PROC_destroy () failed. Status = [0x%x]\n", tmpStatus) ;
+        RGB2YCBCR_DSP_1Print ("PROC_destroy () failed. Status = [0x%x]\n", tmpStatus) ;
     }
 
-    RGB2YCBCR-DSP_0Print ("Leaving RGB2YCBCR-DSP_Delete ()\n") ;
+    RGB2YCBCR_DSP_0Print ("Leaving RGB2YCBCR_DSP_Delete ()\n") ;
 }
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Main
+ *  @func   RGB2YCBCR_DSP_Main
  *
  *  @desc   Entry point for the application
  *
@@ -563,7 +563,7 @@ RGB2YCBCR-DSP_Delete (Uint8 processorId)
  */
 NORMAL_API
 Void
-RGB2YCBCR-DSP_Main (IN Char8 * dspExecutable,
+RGB2YCBCR_DSP_Main (IN Char8 * dspExecutable,
            IN Char8 * strBufferSize,
            IN Char8 * strNumIterations,
            IN Char8 * strProcessorId)
@@ -571,7 +571,7 @@ RGB2YCBCR-DSP_Main (IN Char8 * dspExecutable,
     DSP_STATUS status       = DSP_SOK ;
     Uint8      processorId  = 0 ;
 
-    RGB2YCBCR-DSP_0Print ("=============== Sample Application : RGB2YCBCR-DSP ==========\n") ;
+    RGB2YCBCR_DSP_0Print ("=============== Sample Application : RGB2YCBCR_DSP ==========\n") ;
 
     if (   (dspExecutable != NULL)
         && (strBufferSize != NULL)
@@ -579,17 +579,17 @@ RGB2YCBCR-DSP_Main (IN Char8 * dspExecutable,
         /*
          *  Validate the buffer size and number of iterations specified.
          */
-        RGB2YCBCR-DSP_BufferSize = DSPLINK_ALIGN (RGB2YCBCR-DSP_Atoi (strBufferSize),
+        RGB2YCBCR_DSP_BufferSize = DSPLINK_ALIGN (RGB2YCBCR_DSP_Atoi (strBufferSize),
                                          DSPLINK_BUF_ALIGN) ;
-        if (RGB2YCBCR-DSP_BufferSize == 0) {
+        if (RGB2YCBCR_DSP_BufferSize == 0) {
             status = DSP_ESIZE ;
         }
 
-        RGB2YCBCR-DSP_NumIterations = RGB2YCBCR-DSP_Atoi (strNumIterations) ;
+        RGB2YCBCR_DSP_NumIterations = RGB2YCBCR_DSP_Atoi (strNumIterations) ;
         /* Find out the processor id to work with */
-        processorId        = RGB2YCBCR-DSP_Atoi (strProcessorId) ;
+        processorId        = RGB2YCBCR_DSP_Atoi (strProcessorId) ;
         if (processorId >= MAX_DSPS) {
-            RGB2YCBCR-DSP_1Print ("==Error: Invalid processor id  specified %d ==\n",
+            RGB2YCBCR_DSP_1Print ("==Error: Invalid processor id  specified %d ==\n",
                          processorId) ;
             status = DSP_EFAIL ;
 
@@ -599,9 +599,9 @@ RGB2YCBCR-DSP_Main (IN Char8 * dspExecutable,
          *  rgb2ycbcr-dsp creation phase.
          */
         if (DSP_SUCCEEDED (status)) {
-             RGB2YCBCR-DSP_1Print ("==== Executing sample for DSP processor Id %d ====\n",
+             RGB2YCBCR_DSP_1Print ("==== Executing sample for DSP processor Id %d ====\n",
                      processorId) ;
-            status = RGB2YCBCR-DSP_Create (dspExecutable,
+            status = RGB2YCBCR_DSP_Create (dspExecutable,
                                   strBufferSize,
                                   strNumIterations,
                                   processorId) ;
@@ -609,27 +609,27 @@ RGB2YCBCR-DSP_Main (IN Char8 * dspExecutable,
             *  Execute the data transfer rgb2ycbcr-dsp.
             */
             if (DSP_SUCCEEDED (status)) {
-                status = RGB2YCBCR-DSP_Execute (RGB2YCBCR-DSP_NumIterations, processorId) ;
+                status = RGB2YCBCR_DSP_Execute (RGB2YCBCR_DSP_NumIterations, processorId) ;
             }
 
             /*
              *  Perform cleanup operation.
              */
-            RGB2YCBCR-DSP_Delete (processorId) ;
+            RGB2YCBCR_DSP_Delete (processorId) ;
         }
     }
     else {
         status = DSP_EINVALIDARG ;
-        RGB2YCBCR-DSP_0Print ("ERROR! Invalid arguments specified for while executing "
+        RGB2YCBCR_DSP_0Print ("ERROR! Invalid arguments specified for while executing "
                      "rgb2ycbcr-dsp application\n") ;
     }
 
-    RGB2YCBCR-DSP_0Print ("====================================================\n") ;
+    RGB2YCBCR_DSP_0Print ("====================================================\n") ;
 }
 
 #if defined (VERIFY_DATA)
 /** ----------------------------------------------------------------------------
- *  @func   RGB2YCBCR-DSP_VerifyData
+ *  @func   RGB2YCBCR_DSP_VerifyData
  *
  *  @desc   This function verifies the data-integrity of given buffer.
  *
@@ -639,7 +639,7 @@ RGB2YCBCR-DSP_Main (IN Char8 * dspExecutable,
 STATIC
 NORMAL_API
 DSP_STATUS
-RGB2YCBCR-DSP_VerifyData (IN Char8 * buf)
+RGB2YCBCR_DSP_VerifyData (IN Char8 * buf)
 {
     DSP_STATUS status = DSP_SOK ;
     Int16      i                ;
@@ -647,7 +647,7 @@ RGB2YCBCR-DSP_VerifyData (IN Char8 * buf)
     /*
      *  Verify the data.
      */
-    for (i = 0 ; (i < RGB2YCBCR-DSP_BufferSize) && (DSP_SUCCEEDED (status)) ; i++) {
+    for (i = 0 ; (i < RGB2YCBCR_DSP_BufferSize) && (DSP_SUCCEEDED (status)) ; i++) {
         if (*buf++ != XFER_CHAR) {
             status = DSP_EFAIL ;
         }

@@ -35,8 +35,8 @@
  */
 
 
-#if !defined (RGB2YCBCR-DSP_OS_H)
-#define RGB2YCBCR-DSP_OS_H
+#if !defined (RGB2YCBCR_DSP_OS_H)
+#define RGB2YCBCR_DSP_OS_H
 
 
 #if defined (__cplusplus)
@@ -69,7 +69,7 @@ extern int atoi (const char * str) ;
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Atoi
+ *  @func   RGB2YCBCR_DSP_Atoi
  *
  *  @desc   This function converts a string into an integer value.
  *
@@ -88,11 +88,11 @@ extern int atoi (const char * str) ;
  *  @see    None
  *  ============================================================================
  */
-#define RGB2YCBCR-DSP_Atoi atoi
+#define RGB2YCBCR_DSP_Atoi atoi
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Atoll
+ *  @func   RGB2YCBCR_DSP_Atoll
  *
  *  @desc   Converts ascii to long int
  *
@@ -110,7 +110,7 @@ extern int atoi (const char * str) ;
  */
 NORMAL_API
 Uint32
-RGB2YCBCR-DSP_Atoll (Char8 * str) ;
+RGB2YCBCR_DSP_Atoll (Char8 * str) ;
 
 
 #if defined (__cplusplus)
@@ -118,4 +118,4 @@ RGB2YCBCR-DSP_Atoll (Char8 * str) ;
 #endif /* defined (__cplusplus) */
 
 
-#endif /* !defined (RGB2YCBCR-DSP_OS_H) */
+#endif /* !defined (RGB2YCBCR_DSP_OS_H) */

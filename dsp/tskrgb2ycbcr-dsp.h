@@ -35,8 +35,8 @@
  */
 
 
-#if !defined (TSKRGB2YCBCR-DSP_)
-#define TSKRGB2YCBCR-DSP_
+#if !defined (TSKRGB2YCBCR_DSP_)
+#define TSKRGB2YCBCR_DSP_
 
 
 #if defined (__cplusplus)
@@ -62,7 +62,7 @@ extern "C" {
 
 
 /** ============================================================================
- *  @name   TSKRGB2YCBCR-DSP_TransferInfo
+ *  @name   TSKRGB2YCBCR_DSP_TransferInfo
  *
  *  @desc   Structure used to keep various information needed by various phases
  *          of the application.
@@ -83,7 +83,7 @@ extern "C" {
  *              Array of buffer pointers.
  *  ============================================================================
  */
-typedef struct TSKRGB2YCBCR-DSP_TransferInfo_tag {
+typedef struct TSKRGB2YCBCR_DSP_TransferInfo_tag {
     SIO_Handle inputStream;
     SIO_Handle outputStream;
     Uint16     numTransfers;
@@ -91,13 +91,13 @@ typedef struct TSKRGB2YCBCR-DSP_TransferInfo_tag {
     Uint16     receivedSize;
     Uint16     numBuffers;
     Char *     buffers [MAX_BUFFERS];
-} TSKRGB2YCBCR-DSP_TransferInfo;
+} TSKRGB2YCBCR_DSP_TransferInfo;
 
 
 /** ============================================================================
- *  @func   TSKRGB2YCBCR-DSP_create
+ *  @func   TSKRGB2YCBCR_DSP_create
  *
- *  @desc   Create phase function of TSKRGB2YCBCR-DSP application.
+ *  @desc   Create phase function of TSKRGB2YCBCR_DSP application.
  *
  *  @arg    transferInfo
  *              Information for transfer.
@@ -114,12 +114,12 @@ typedef struct TSKRGB2YCBCR-DSP_TransferInfo_tag {
  *  @see    None
  *  ============================================================================
  */
-Int TSKRGB2YCBCR-DSP_create (TSKRGB2YCBCR-DSP_TransferInfo ** transferInfo);
+Int TSKRGB2YCBCR_DSP_create (TSKRGB2YCBCR_DSP_TransferInfo ** transferInfo);
 
 /** ============================================================================
- *  @func   TSKRGB2YCBCR-DSP_execute
+ *  @func   TSKRGB2YCBCR_DSP_execute
  *
- *  @desc   Excecute phase function of TSKRGB2YCBCR-DSP application.
+ *  @desc   Excecute phase function of TSKRGB2YCBCR_DSP application.
  *
  *  @arg    transferInfo
  *              Information for transfer.
@@ -136,12 +136,12 @@ Int TSKRGB2YCBCR-DSP_create (TSKRGB2YCBCR-DSP_TransferInfo ** transferInfo);
  *  @see    None
  *  ============================================================================
  */
-Int TSKRGB2YCBCR-DSP_execute (TSKRGB2YCBCR-DSP_TransferInfo * transferInfo);
+Int TSKRGB2YCBCR_DSP_execute (TSKRGB2YCBCR_DSP_TransferInfo * transferInfo);
 
 /** ============================================================================
- *  @func   TSKRGB2YCBCR-DSP_delete
+ *  @func   TSKRGB2YCBCR_DSP_delete
  *
- *  @desc   Delete phase function of TSKRGB2YCBCR-DSP application.
+ *  @desc   Delete phase function of TSKRGB2YCBCR_DSP application.
  *
  *  @arg    transferInfo
  *              Information for transfer.
@@ -158,7 +158,7 @@ Int TSKRGB2YCBCR-DSP_execute (TSKRGB2YCBCR-DSP_TransferInfo * transferInfo);
  *  @see    None
  *  ============================================================================
  */
-Int TSKRGB2YCBCR-DSP_delete (TSKRGB2YCBCR-DSP_TransferInfo * transferInfo);
+Int TSKRGB2YCBCR_DSP_delete (TSKRGB2YCBCR_DSP_TransferInfo * transferInfo);
 
 
 #if defined (__cplusplus)
@@ -166,4 +166,4 @@ Int TSKRGB2YCBCR-DSP_delete (TSKRGB2YCBCR-DSP_TransferInfo * transferInfo);
 #endif /* defined (__cplusplus) */
 
 
-#endif /* !defined (TSKRGB2YCBCR-DSP_) */
+#endif /* !defined (TSKRGB2YCBCR_DSP_) */

@@ -35,8 +35,8 @@
  */
 
 
-#if !defined (RGB2YCBCR-DSP_H)
-#define RGB2YCBCR-DSP_H
+#if !defined (RGB2YCBCR_DSP_H)
+#define RGB2YCBCR_DSP_H
 
 /*  ----------------------------------- DSP/BIOS Link                 */
 #include <dsplink.h>
@@ -66,7 +66,7 @@ extern "C" {
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Create
+ *  @func   RGB2YCBCR_DSP_Create
  *
  *  @desc   This function allocates and initializes resources used by
  *          this application.
@@ -95,7 +95,7 @@ extern "C" {
  *  @see    LOOP_Delete
  *  ============================================================================
  */
-NORMAL_API DSP_STATUS RGB2YCBCR-DSP_Create(
+NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create(
    IN Char8 * dspExecutable,
    IN Char8 * strBufferSize,
    IN Char8 * strNumIterations,
@@ -103,7 +103,7 @@ NORMAL_API DSP_STATUS RGB2YCBCR-DSP_Create(
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Execute
+ *  @func   RGB2YCBCR_DSP_Execute
  *
  *  @desc   This function implements the execute phase for this application.
  *
@@ -125,19 +125,19 @@ NORMAL_API DSP_STATUS RGB2YCBCR-DSP_Create(
  *
  *  @leave  None
  *
- *  @see    RGB2YCBCR-DSP_Delete , RGB2YCBCR-DSP_Create
+ *  @see    RGB2YCBCR_DSP_Delete , RGB2YCBCR_DSP_Create
  *  ============================================================================
  */
-NORMAL_API DSP_STATUS RGB2YCBCR-DSP_Execute(
+NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
    IN Uint32 numIterations, 
    IN Uint8 processorId);
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Delete
+ *  @func   RGB2YCBCR_DSP_Delete
  *
  *  @desc   This function releases resources allocated earlier by call to
- *          RGB2YCBCR-DSP_Create ().
+ *          RGB2YCBCR_DSP_Create ().
  *          During cleanup, the allocated resources are being freed
  *          unconditionally. Actual applications may require stricter check
  *          against return values for robustness.
@@ -156,15 +156,15 @@ NORMAL_API DSP_STATUS RGB2YCBCR-DSP_Execute(
  *
  *  @leave  None
  *
- *  @see    RGB2YCBCR-DSP_Create
+ *  @see    RGB2YCBCR_DSP_Create
  *  ============================================================================
  */
-NORMAL_API Void RGB2YCBCR-DSP_Delete(
+NORMAL_API Void RGB2YCBCR_DSP_Delete(
    Uint8 processorId);
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Main
+ *  @func   RGB2YCBCR_DSP_Main
  *
  *  @desc   The OS independent driver function for the rgb2ycbcr-dsp application.
  *
@@ -185,10 +185,10 @@ NORMAL_API Void RGB2YCBCR-DSP_Delete(
  *
  *  @leave  None
  *
- *  @see    RGB2YCBCR-DSP_Create, RGB2YCBCR-DSP_Execute, RGB2YCBCR-DSP_Delete
+ *  @see    RGB2YCBCR_DSP_Create, RGB2YCBCR_DSP_Execute, RGB2YCBCR_DSP_Delete
  *  ============================================================================
  */
-NORMAL_API Void RGB2YCBCR-DSP_Main(
+NORMAL_API Void RGB2YCBCR_DSP_Main(
    IN Char8 * dspExecutable,
    IN Char8 * strBuffersize,
    IN Char8 * strNumIterations,
@@ -197,7 +197,7 @@ NORMAL_API Void RGB2YCBCR-DSP_Main(
 
 #if defined (DA8XXGEM)
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_Main_DA8XX
+ *  @func   RGB2YCBCR_DSP_Main_DA8XX
  *
  *  @desc   The OS independent driver function for the rgb2ycbcr-dsp application.
  *
@@ -223,10 +223,10 @@ NORMAL_API Void RGB2YCBCR-DSP_Main(
  *
  *  @leave  None
  *
- *  @see    RGB2YCBCR-DSP_Create, RGB2YCBCR-DSP_Execute, RGB2YCBCR-DSP_Delete
+ *  @see    RGB2YCBCR_DSP_Create, RGB2YCBCR_DSP_Execute, RGB2YCBCR_DSP_Delete
  *  ============================================================================
  */
-NORMAL_API Void RGB2YCBCR-DSP_Main_DA8XX(
+NORMAL_API Void RGB2YCBCR_DSP_Main_DA8XX(
    IN Char8 * dspExecutable,
    IN Char8 * strBuffersize,
    IN Char8 * strNumIterations,
@@ -238,7 +238,7 @@ NORMAL_API Void RGB2YCBCR-DSP_Main_DA8XX(
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_0Print
+ *  @func   RGB2YCBCR_DSP_0Print
  *
  *  @desc   Print a message without any arguments.
  *          This is a OS specific function and is implemented in file:
@@ -256,12 +256,12 @@ NORMAL_API Void RGB2YCBCR-DSP_Main_DA8XX(
  *  @see    None
  *  ============================================================================
  */
-NORMAL_API Void RGB2YCBCR-DSP_0Print(
+NORMAL_API Void RGB2YCBCR_DSP_0Print(
    Char8 * str);
 
 
 /** ============================================================================
- *  @func   RGB2YCBCR-DSP_1Print
+ *  @func   RGB2YCBCR_DSP_1Print
  *
  *  @desc   Print a message with one arguments.
  *          This is a OS specific function and is implemented in file:
@@ -281,7 +281,7 @@ NORMAL_API Void RGB2YCBCR-DSP_0Print(
  *  @see    None
  *  ============================================================================
  */
-NORMAL_API Void RGB2YCBCR-DSP_1Print(
+NORMAL_API Void RGB2YCBCR_DSP_1Print(
    Char8 * str, Uint32 arg);
 
 
@@ -290,4 +290,4 @@ NORMAL_API Void RGB2YCBCR-DSP_1Print(
 #endif /* defined (__cplusplus) */
 
 
-#endif /* !defined (RGB2YCBCR-DSP_H) */
+#endif /* !defined (RGB2YCBCR_DSP_H) */

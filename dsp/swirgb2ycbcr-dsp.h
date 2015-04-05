@@ -3,7 +3,7 @@
  *
  *  @path   $(DSPLINK)/dsp/src/samples/rgb2ycbcr-dsp/
  *
- *  @desc   Header file for SWI RGB2YCBCR-DSP application.
+ *  @desc   Header file for SWI RGB2YCBCR_DSP application.
  *
  *  @ver    1.65.00.03
  *  ============================================================================
@@ -35,8 +35,8 @@
  */
 
 
-#if !defined (SWIRGB2YCBCR-DSP_)
-#define SWIRGB2YCBCR-DSP_
+#if !defined (SWIRGB2YCBCR_DSP_)
+#define SWIRGB2YCBCR_DSP_
 
 
 #if defined (__cplusplus)
@@ -45,7 +45,7 @@ extern "C" {
 
 
 /** ============================================================================
- *  @name   SWIRGB2YCBCR-DSP_TransferInfo
+ *  @name   SWIRGB2YCBCR_DSP_TransferInfo
  *
  *  @desc   Structure used to keep various information needed by various phases
  *          of the application.
@@ -70,7 +70,7 @@ extern "C" {
  *              Size of buffer.
  *  ============================================================================
  */
-typedef struct SWIRGB2YCBCR-DSP_TransferInfo_tag {
+typedef struct SWIRGB2YCBCR_DSP_TransferInfo_tag {
     GIO_Handle      gioInputChan;
     GIO_Handle      gioOutputChan;
     GIO_AppCallback appReadCb;
@@ -80,13 +80,13 @@ typedef struct SWIRGB2YCBCR-DSP_TransferInfo_tag {
     Uint16          readWords;
     SWI_Handle      swi;
     Uint16          bufferSize;
-} SWIRGB2YCBCR-DSP_TransferInfo;
+} SWIRGB2YCBCR_DSP_TransferInfo;
 
 
 /** ============================================================================
- *  @func   SWIRGB2YCBCR-DSP_create
+ *  @func   SWIRGB2YCBCR_DSP_create
  *
- *  @desc   Create phase function of SWIRGB2YCBCR-DSP application.
+ *  @desc   Create phase function of SWIRGB2YCBCR_DSP application.
  *
  *  @arg    transferInfo
  *              Information for transfer.
@@ -103,12 +103,12 @@ typedef struct SWIRGB2YCBCR-DSP_TransferInfo_tag {
  *  @see    None
  *  ============================================================================
  */
-Int SWIRGB2YCBCR-DSP_create (SWIRGB2YCBCR-DSP_TransferInfo ** transferInfo);
+Int SWIRGB2YCBCR_DSP_create (SWIRGB2YCBCR_DSP_TransferInfo ** transferInfo);
 
 /** ============================================================================
- *  @func   SWIRGB2YCBCR-DSP_execute
+ *  @func   SWIRGB2YCBCR_DSP_execute
  *
- *  @desc   Excecute phase function of SWIRGB2YCBCR-DSP application.
+ *  @desc   Excecute phase function of SWIRGB2YCBCR_DSP application.
  *
  *  @arg    transferInfo
  *              Information for transfer.
@@ -125,12 +125,12 @@ Int SWIRGB2YCBCR-DSP_create (SWIRGB2YCBCR-DSP_TransferInfo ** transferInfo);
  *  @see    None
  *  ============================================================================
  */
-Int SWIRGB2YCBCR-DSP_execute (SWIRGB2YCBCR-DSP_TransferInfo * transferInfo);
+Int SWIRGB2YCBCR_DSP_execute (SWIRGB2YCBCR_DSP_TransferInfo * transferInfo);
 
 /** ============================================================================
- *  @func   SWIRGB2YCBCR-DSP_delete
+ *  @func   SWIRGB2YCBCR_DSP_delete
  *
- *  @desc   Delete phase function of SWIRGB2YCBCR-DSP application.
+ *  @desc   Delete phase function of SWIRGB2YCBCR_DSP application.
  *
  *  @arg    transferInfo
  *              Information for transfer.
@@ -147,7 +147,7 @@ Int SWIRGB2YCBCR-DSP_execute (SWIRGB2YCBCR-DSP_TransferInfo * transferInfo);
  *  @see    None
  *  ============================================================================
  */
-Int SWIRGB2YCBCR-DSP_delete (SWIRGB2YCBCR-DSP_TransferInfo * transferInfo);
+Int SWIRGB2YCBCR_DSP_delete (SWIRGB2YCBCR_DSP_TransferInfo * transferInfo);
 
 
 #if defined (__cplusplus)
@@ -155,4 +155,4 @@ Int SWIRGB2YCBCR-DSP_delete (SWIRGB2YCBCR-DSP_TransferInfo * transferInfo);
 #endif /* defined (__cplusplus) */
 
 
-#endif /* !defined (SWIRGB2YCBCR-DSP_) */
+#endif /* !defined (SWIRGB2YCBCR_DSP_) */

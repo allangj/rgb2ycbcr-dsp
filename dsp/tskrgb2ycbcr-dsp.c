@@ -120,19 +120,19 @@ DEV_Attrs dioDevAttrs = {
 #endif
 
 /** ============================================================================
- *  @func   TSKRGB2YCBCR-DSP_create
+ *  @func   TSKRGB2YCBCR_DSP_create
  *
- *  @desc   Create phase function for the TSKRGB2YCBCR-DSP application. Initializes the
- *          TSKRGB2YCBCR-DSP_TransferInfo structure with the information that will be
+ *  @desc   Create phase function for the TSKRGB2YCBCR_DSP application. Initializes the
+ *          TSKRGB2YCBCR_DSP_TransferInfo structure with the information that will be
  *          used by the other phases of the application.
  *
  *  @modif  None.
  *  ============================================================================
  */
-Int TSKRGB2YCBCR-DSP_create (TSKRGB2YCBCR-DSP_TransferInfo ** infoPtr)
+Int TSKRGB2YCBCR_DSP_create (TSKRGB2YCBCR_DSP_TransferInfo ** infoPtr)
 {
     Int                     status = SYS_OK ;
-    TSKRGB2YCBCR-DSP_TransferInfo *  info = NULL ;
+    TSKRGB2YCBCR_DSP_TransferInfo *  info = NULL ;
     SIO_Attrs               attrs ;
     Uint16                  i ;
     Uint16                  j ;
@@ -155,11 +155,11 @@ Int TSKRGB2YCBCR-DSP_create (TSKRGB2YCBCR-DSP_TransferInfo ** infoPtr)
     status = DEV_createDevice("/dio_dsplink", &DIO_tskDynamicFxns, NULL, &dioDevAttrs);
 #endif
 
-    /* Allocate TSKRGB2YCBCR-DSP_TransferInfo structure that will be initialized
+    /* Allocate TSKRGB2YCBCR_DSP_TransferInfo structure that will be initialized
      * and passed to other phases of the application
      */
     *infoPtr = MEM_calloc (DSPLINK_SEGID,
-                           sizeof (TSKRGB2YCBCR-DSP_TransferInfo),
+                           sizeof (TSKRGB2YCBCR_DSP_TransferInfo),
                            DSPLINK_BUF_ALIGN) ;
     if (*infoPtr == NULL) {
         status = SYS_EALLOC ;
@@ -222,9 +222,9 @@ Int TSKRGB2YCBCR-DSP_create (TSKRGB2YCBCR-DSP_TransferInfo ** infoPtr)
 
 
 /** ============================================================================
- *  @func   TSKRGB2YCBCR-DSP_execute
+ *  @func   TSKRGB2YCBCR_DSP_execute
  *
- *  @desc   Execute phase function for the TSKRGB2YCBCR-DSP application. Application
+ *  @desc   Execute phase function for the TSKRGB2YCBCR_DSP application. Application
  *          receives the data from the input channel and sends the same data
  *          back on output channel. Channel numbers can be configured through
  *          header file.
@@ -232,7 +232,7 @@ Int TSKRGB2YCBCR-DSP_create (TSKRGB2YCBCR-DSP_TransferInfo ** infoPtr)
  *  @modif  None.
  *  ============================================================================
  */
-Int TSKRGB2YCBCR-DSP_execute(TSKRGB2YCBCR-DSP_TransferInfo * info)
+Int TSKRGB2YCBCR_DSP_execute(TSKRGB2YCBCR_DSP_TransferInfo * info)
 {
     Int         status  = SYS_OK ;
     Char *      buffer  = info->buffers [0] ;
@@ -299,16 +299,16 @@ Int TSKRGB2YCBCR-DSP_execute(TSKRGB2YCBCR-DSP_TransferInfo * info)
 
 
 /** ============================================================================
- *  @func   TSKRGB2YCBCR-DSP_delete
+ *  @func   TSKRGB2YCBCR_DSP_delete
  *
- *  @desc   Delete phase function for the TSKRGB2YCBCR-DSP application. It deallocates
+ *  @desc   Delete phase function for the TSKRGB2YCBCR_DSP application. It deallocates
  *          all the resources of allocated during create phase of the
  *          application.
  *
  *  @modif  None.
  *  ============================================================================
  */
-Int TSKRGB2YCBCR-DSP_delete (TSKRGB2YCBCR-DSP_TransferInfo * info)
+Int TSKRGB2YCBCR_DSP_delete (TSKRGB2YCBCR_DSP_TransferInfo * info)
 {
     Int     status     = SYS_OK ;
     Uint16  tmpStatus = SYS_OK ;
@@ -342,7 +342,7 @@ Int TSKRGB2YCBCR-DSP_delete (TSKRGB2YCBCR-DSP_TransferInfo * info)
     }
 
     /* Free the info structure */
-    freeStatus = MEM_free (DSPLINK_SEGID, info, sizeof (TSKRGB2YCBCR-DSP_TransferInfo)) ;
+    freeStatus = MEM_free (DSPLINK_SEGID, info, sizeof (TSKRGB2YCBCR_DSP_TransferInfo)) ;
     if ((status == SYS_OK) && (freeStatus != TRUE)) {
         status = SYS_EFREE ;
         SET_FAILURE_REASON (status) ;
