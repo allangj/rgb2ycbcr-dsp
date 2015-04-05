@@ -66,7 +66,7 @@ extern "C" {
  *  @desc   Address of c_int00 in the DSP executable.
  *  ============================================================================
  */
-extern Uint32 LOOP_dspAddr ;
+extern Uint32 RGB2YCBCR_DSP_dspAddr ;
 
 /** ============================================================================
  *  @name   shmAddr
@@ -74,7 +74,7 @@ extern Uint32 LOOP_dspAddr ;
  *  @desc   Address of symbol DSPLINK_shmBaseAddres in the DSP executable.
  *  ============================================================================
  */
-extern Uint32 LOOP_shmAddr ;
+extern Uint32 RGB2YCBCR_DSP_shmAddr ;
 
 /** ============================================================================
  *  @name   argsAddr
@@ -82,7 +82,7 @@ extern Uint32 LOOP_shmAddr ;
  *  @desc   Address of .args section in the DSP executable.
  *  ============================================================================
  */
-extern Uint32 LOOP_argsAddr ;
+extern Uint32 RGB2YCBCR_DSP_argsAddr ;
 
 /** ============================================================================
  *  @name   LINKCFG_config
@@ -151,9 +151,9 @@ int main (int argc, char ** argv)
                 strShmAddr       = "0x0" ;
                 strDspAddr       = "0x0" ;
                 strArgsAddr      = "0x0" ;
-                LOOP_shmAddr     = LOOP_Atoll (strShmAddr) ;
-                LOOP_dspAddr     = LOOP_Atoll (strDspAddr) ;
-                LOOP_argsAddr    = LOOP_Atoll (strArgsAddr) ;
+                RGB2YCBCR_DSP_shmAddr     = RGB2YCBCR_DSP_Atoll (strShmAddr) ;
+                RGB2YCBCR_DSP_dspAddr     = RGB2YCBCR_DSP_Atoll (strDspAddr) ;
+                RGB2YCBCR_DSP_argsAddr    = RGB2YCBCR_DSP_Atoll (strArgsAddr) ;
                 /* For No bootmode Hard coding the values
                  * since DSP side app is using the same values
                  */
@@ -162,7 +162,7 @@ int main (int argc, char ** argv)
 
             }
 #endif
-            LOOP_Main (dspExecutable,
+            RGB2YCBCR_DSP_Main (dspExecutable,
                        strBufferSize,
                        strNumIterations,
                        strProcessorId) ;

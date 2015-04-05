@@ -92,7 +92,7 @@ extern "C" {
  *
  *  @leave  None
  *
- *  @see    LOOP_Delete
+ *  @see    RGB2YCBCR_DSP_Delete
  *  ============================================================================
  */
 NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create(
