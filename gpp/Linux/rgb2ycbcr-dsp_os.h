@@ -108,9 +108,8 @@ extern int atoi (const char * str) ;
  *  @see    None
  *  ============================================================================
  */
-NORMAL_API
-Uint32
-RGB2YCBCR_DSP_Atoll (Char8 * str) ;
+NORMAL_API Uint32 RGB2YCBCR_DSP_Atoll (
+   Char8 * str);
 
 
 #if defined (__cplusplus)

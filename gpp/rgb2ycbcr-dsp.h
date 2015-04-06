@@ -73,12 +73,8 @@ extern "C" {
  *
  *  @arg    dspExecutable
  *              DSP executable name.
- *  @arg    bufferSize
- *              String representation of buffer size to be used
- *              for data transfer.
- *  @arg    strNumIterations
- *              Number of iterations a data buffer is transferred between
- *              GPP and DSP in string format.
+ *  @arg    strBufferSize
+ *              Buffer size to be used for data transfer. Its a size in bytes.
  *
  *  @arg    processorId
  *             Id of the DSP Processor. 
@@ -97,8 +93,8 @@ extern "C" {
  */
 NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create(
    IN Char8 * dspExecutable,
-   IN Char8 * strBufferSize,
-   IN Char8 * strNumIterations,
+   IN Char8 * strImageInput,
+   IN Uint8 * strBufferSize,
    IN Uint8   processorId);
 
 
@@ -107,14 +103,10 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create(
  *
  *  @desc   This function implements the execute phase for this application.
  *
- *  @arg    numIterations
- *              Number of iterations a data buffer is transferred between
- *              GPP and DSP in string format.
- *
  *  @ret    DSP_SOK
  *              Operation Successfully completed.
  *          DSP_EFAIL
- *              Loop execution failed.
+ *              Execution failed.
  *
  *  @arg    processorId
  *             Id of the DSP Processor. 
@@ -129,7 +121,6 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create(
  *  ============================================================================
  */
 NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
-   IN Uint32 numIterations, 
    IN Uint8 processorId);
 
 
@@ -170,13 +161,14 @@ NORMAL_API Void RGB2YCBCR_DSP_Delete(
  *
  *  @arg    dspExecutable
  *              Name of the DSP executable file.
+ *  @arg    strImageInput
+ *              Input image name in string format.
+ *  @arg    strImageOutput
+ *              Output image name in string format.
  *  @arg    strBufferSize
- *              Buffer size to be used for data-transfer in string format.
- *  @arg    strNumIterations
- *              Number of iterations a data buffer is transferred between
- *              GPP and DSP in string format.
+ *              Size of the Buffer to use.
  *
- *  @arg    processorId
+ *  @arg    strProcessorId
  *             Id of the DSP Processor in string format. 
  *
  *  @ret    DSP_SOK
@@ -190,52 +182,10 @@ NORMAL_API Void RGB2YCBCR_DSP_Delete(
  */
 NORMAL_API Void RGB2YCBCR_DSP_Main(
    IN Char8 * dspExecutable,
-   IN Char8 * strBuffersize,
-   IN Char8 * strNumIterations,
-   IN Char8 * processorId) ;
-
-
-#if defined (DA8XXGEM)
-/** ============================================================================
- *  @func   RGB2YCBCR_DSP_Main_DA8XX
- *
- *  @desc   The OS independent driver function for the rgb2ycbcr-dsp application.
- *
- *  @arg    dspExecutable
- *              Name of the DSP executable file.
- *  @arg    strBufferSize
- *              Buffer size to be used for data-transfer in string format.
- *  @arg    strNumIterations
- *              Number of iterations a data buffer is transferred between
- *              GPP and DSP in string format.
- *  @arg    processorId
- *             Id of the DSP Processor in string format. 
- *  @arg    strDspAddr
- *             c_int00 address
- *  @arg    strShmAddr
- *             DSPLINK_shmBaseAddress address
- *  @arg    strArgsAddr
- *             .args section address
- *
- *  @ret    DSP_SOK
- *
- *  @enter  None
- *
- *  @leave  None
- *
- *  @see    RGB2YCBCR_DSP_Create, RGB2YCBCR_DSP_Execute, RGB2YCBCR_DSP_Delete
- *  ============================================================================
- */
-NORMAL_API Void RGB2YCBCR_DSP_Main_DA8XX(
-   IN Char8 * dspExecutable,
-   IN Char8 * strBuffersize,
-   IN Char8 * strNumIterations,
-   IN Char8 * processorId,
-   IN Char8 * strDspAddr,
-   IN Char8 * strShmAddr,
-   IN Char8 * strArgsAddr);
-#endif
-
+   IN Char8 * strImageInput,
+   IN Char8 * strImageOutput,
+   IN Char8 * strBufferSize,
+   IN Char8 * strProcessorId);
 
 /** ============================================================================
  *  @func   RGB2YCBCR_DSP_0Print
@@ -284,6 +234,59 @@ NORMAL_API Void RGB2YCBCR_DSP_0Print(
 NORMAL_API Void RGB2YCBCR_DSP_1Print(
    Char8 * str, Uint32 arg);
 
+/** ============================================================================
+ *  @func   RGB2YCBCR_DSP_Load_Image
+ *
+ *  @desc   Load a PNG image file.
+ *          This is a OS specific function and is implemented in file:
+ *              <GPPOS>\rgb2ycbcr-dsp_os.c
+ *
+ *  @arg    file_name
+ *              String path to image.
+ *
+ *  @arg    height
+ *              Pointer to height of the image.
+ *
+ *  @arg    width
+ *              Pointer to width of the image.
+ *
+ *  @arg    buff_ptr
+ *              Pointer to buffer.
+ *
+ *  @ret    None
+ *
+ *  @enter  None
+ *
+ *  @leave  None
+ *
+ *  @see    None
+ *  ============================================================================
+ */
+NORMAL_API Void RGB2YCBCR_DSP_Load_Image(
+   Char8 * file_name,
+   Char8 * buff_ptr);
+
+/** ============================================================================
+ *  @func   RGB2YCBCR_DSP_Write_Image
+ *
+ *  @desc   Write a PNG image file.
+ *          This is a OS specific function and is implemented in file:
+ *              <GPPOS>\rgb2ycbcr-dsp_os.c
+ *
+ *  @arg    file_name
+ *              String path to image.
+ *
+ *  @ret    None
+ *
+ *  @enter  None
+ *
+ *  @leave  None
+ *
+ *  @see    None
+ *  ============================================================================
+ */
+NORMAL_API Void RGB2YCBCR_DSP_Write_Image(
+   Char8 * file_name);
 
 #if defined (__cplusplus)
 }
