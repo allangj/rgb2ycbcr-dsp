@@ -98,45 +98,7 @@ Uint16 numTransfers ;
  */
 volatile Uint32 DSPLINK_initFlag = 0xBABAC0C0 ;
 
-#if defined (DM6446GEM)
-/** ============================================================================
- *  @name   DSPLINK_INT_VEC_ID
- *
- *  @desc   Interrupt vectorId to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_VEC_ID         (4u)
-
-/** ============================================================================
- *  @name   DSPLINK_INT_ID
- *
- *  @desc   Interrupt ID to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_ID             (16u)
-
-#elif defined (DM6467GEM )
-/** ============================================================================
- *  @name   DSPLINK_INT_VEC_ID
- *
- *  @desc   Interrupt vectorId to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_VEC_ID         (4u)
-
-/** ============================================================================
- *  @name   DSPLINK_INT_ID
- *
- *  @desc   Interrupt ID to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_ID             (16u)
-
-#elif defined (OMAP3530)
+#if defined (OMAP3530)
 
 /** ============================================================================
  *  @name   DSPLINK_INT_VEC_ID
@@ -155,124 +117,9 @@ volatile Uint32 DSPLINK_initFlag = 0xBABAC0C0 ;
  *  ============================================================================
  */
 #define  DSPLINK_INT_ID             (55u)
-
-#elif defined (OMAP2530)
-
-/** ============================================================================
- *  @name   DSPLINK_INT_VEC_ID
- *
- *  @desc   Interrupt vectorId to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_VEC_ID         (5u)
-
-/** ============================================================================
- *  @name   DSPLINK_INT_ID
- *
- *  @desc   Interrupt ID to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_ID             (55u)
-
-#elif defined (DM6437)
-
-/** ============================================================================
- *  @name   DSPLINK_INT_VEC_ID
- *
- *  @desc   Interrupt vectorId to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_VEC_ID         (4u)
-
-/** ============================================================================
- *  @name   DSPLINK_INT_ID
- *
- *  @desc   Interrupt ID to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_ID             (56u)
-
-#elif defined (DM648)
-/** ============================================================================
- *  @name   DSPLINK_INT_VEC_ID
- *
- *  @desc   Interrupt vectorId to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_VEC_ID         (4u)
-
-/** ============================================================================
- *  @name   DSPLINK_INT_ID
- *
- *  @desc   Interrupt ID to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_ID             (15u)
-
-#elif defined (DRA44XGEM )
-/** ============================================================================
- *  @name   DSPLINK_INT_VEC_ID
- *
- *  @desc   Interrupt vectorId to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_VEC_ID         (4u)
-
-/** ============================================================================
- *  @name   DSPLINK_INT_ID
- *
- *  @desc   Interrupt ID to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_ID             (16u)
-
-#elif defined (DRX416GEM)
-/** ============================================================================
- *  @name   DSPLINK_INT_VEC_ID
- *
- *  @desc   Interrupt vectorId to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_VEC_ID         (4u)
-
-/** ============================================================================
- *  @name   DSPLINK_INT_ID
- *
- *  @desc   Interrupt ID to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_ID             (16u)
-
-#elif defined (DA8XXGEM)
-/** ============================================================================
- *  @name   DSPLINK_INT_VEC_ID
- *
- *  @desc   Interrupt vectorId to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_VEC_ID         (4u)
-
-/** ============================================================================
- *  @name   DSPLINK_INT_ID
- *
- *  @desc   Interrupt ID to be used in HAL_initIsr. Value Corresponds to
- *          IPS table 0 in CFG file.
- *  ============================================================================
- */
-#define  DSPLINK_INT_ID             (5u)
 
 #endif
+
 #endif
 
 
@@ -381,7 +228,7 @@ Void main(Int argc, Char *argv[])
     DSPLINK_init () ;
 
     /* Get the number of transfers to be done by the application */
-    numTransfers = atoi (argv[1]) ;
+    numTransfers = 1; //atoi (argv[1]) ;
 
     /* Transfer size given by GPP side */
     xferBufSize = DSPLINK_ALIGN ((atoi (argv[0]) / DSP_MAUSIZE),

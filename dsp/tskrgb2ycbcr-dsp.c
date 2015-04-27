@@ -239,6 +239,7 @@ Int TSKRGB2YCBCR_DSP_execute(TSKRGB2YCBCR_DSP_TransferInfo * info)
     Arg         arg     = 0 ;
     Uint32      i ;
     Int         nmadus ;
+    Real32      y,cb,cr;
 
     /* Execute the rgb2ycbcr-dsp for configured number of transfers
      * A value of 0 in numTransfers implies infinite iterations
@@ -271,6 +272,15 @@ Int TSKRGB2YCBCR_DSP_execute(TSKRGB2YCBCR_DSP_TransferInfo * info)
         /* Do processing on this buffer */
         if (status == SYS_OK) {
             /* Add code to process the buffer here*/
+            for (i = 0 ; (i+3) <= info->receivedSize ; i = i+3) {
+               y = (D11 * info->inputBuffer[i]) + (D12 * info->inputBuffer[i+1]) + (D13 * info->inputBuffer[i+2]) + C1;
+               cb = (D21 * info->inputBuffer[i]) + (D22 * info->inputBuffer[i+1]) + (D23 * info->inputBuffer[i+2]) + C2;
+               cr = (D31 * info->inputBuffer[i]) + (D32 * info->inputBuffer[i+1]) + (D33 * info->inputBuffer[i+2]) + C3;
+
+               info->outputBuffer[i] = y;
+               info->outputBuffer[i+1] = cb;
+               info->outputBuffer[i+2] = cr;
+            }
         }
 
         /* Send the processed buffer back to GPP */
