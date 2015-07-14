@@ -46,11 +46,31 @@
 #include <loop_os.h>
 #include <loop.h>
 
+/* PNG header to manipulate the image */
+#include <png.h>
 
+/* Defines */
+#define NUMBER_OF_CHANNELS 3
+
+/* Global data */
+int width, height;
+png_byte color_type;
+png_byte bit_depth;
+png_structp png_ptr;
+png_infop info_ptr;
+int number_of_passes;
+png_bytep * row_pointers;
 
 #if defined (__cplusplus)
 extern "C" {
 #endif /* defined (__cplusplus) */
+
+/* FUNCTION PROTOTYPES */
+void image_load(
+   Char8 * file_name);
+
+void image_store(
+   Char8 * file_name)
 
 /** ============================================================================
  *  @func   main
@@ -62,12 +82,18 @@ extern "C" {
  */
 int main (int argc, char ** argv)
 {
-   Char8 * dspExecutable  = NULL;
-   Char8 * strImageInput  = NULL;
-   Char8 * strImageOutput = NULL;
-   Uint8 * strBufferSize  = NULL;
-   Char8 * strProcessorId = NULL;
-   Uint8 processorId      = 0;
+   Char8 * dspExecutable    = NULL;
+   Char8 * strImageInput    = NULL;
+   Char8 * strImageOutput   = NULL;
+   Uint8 * strBufferSize    = NULL;
+   Char8 * strProcessorId   = NULL;
+   Uint8   processorId      = 0;
+   Char8 * buf_data         = NULL;
+   Uint32  dataSize         = 0;
+   Uint32  i                = 0;
+   Char8 * imageData        = NULL;
+   Uint32  numIterations    = 0;
+   Uint8   strNumIterations[10];
 
    if ((argc != 6) && (argc != 5)) {
       printf ("Usage : %s <absolute path of DSP executable> "
@@ -89,19 +115,191 @@ int main (int argc, char ** argv)
          processorId    = atoi(argv [4]);
       }
 
+      /* Read input image */
+      image_load(strImageInput);
+
+      /* Calculate data size to process. Represent the size of the array of bytes */
+      dataSize = width * height * NUMBER_OF_CHANNELS;
+
+      /* Create array with the data to be processed by the DSP */
+      imageData = malloc(sizeof(Char8) * dataSize);
+
+      /* According to the Data Size and the buffer size we calculate how many iterations are needed */
+      numIterations = dataSize / atoi(strBufferSize);
+      if (0 != (dataSize % atoi(strBufferSize))) {
+         numIterations += 1;
+      }
+      strNumIterations = snprintf(strNumIterations, 10, "%d", numIterations);
+
+#ifdef DEBUG
+      printf("Data Size: %d\nStrBuffSize: %s\nstrNumIteration: %s", dataSize, strBufferSize, strNumIterations);
+#endif
+
+      /* Assign data to new array */
+      for (y=0; y<height; y++) {
+      png_byte* row = row_pointers[y];
+
+      for (x=0; x<width; x++) {
+         png_byte* ptr = &(row[x*3]);
+         /* Assign each channel data in R,G,B order */
+         if (dataSize < i) {
+            printf("ERROR: i greater than array size\n");
+            return -1;
+         }
+         imageData[i]   = ptr[0];
+         imageData[i+1] = ptr[1];
+         imageData[i+2] = ptr[2];
+         i += 3;
+      }
+
+      /* Do image processing */
       if (processorId < MAX_PROCESSORS) {
          RGB2YCBCR_DSP_Main (dspExecutable,
-                             strImageInput,
-                             strImageOutput,
+                             imageData,
+                             dataSize,
                              strBufferSize,
+                             strNumIterations,
                              strProcessorId);
       }
 
+      /* Transfer analized data into the image data */
+      for (y=0; y<height; y++) {
+      png_byte* row = row_pointers[y];
+
+      for (x=0; x<width; x++) {
+         png_byte* ptr = &(row[x*3]);
+         /* Assign each channel data in R,G,B order */
+         if (dataSize < i) {
+            printf("ERROR: i greater than array size\n");
+            return -1;
+         }
+         ptr[0] = imageData[i];
+         ptr[1] = imageData[i+1];
+         ptr[2] = imageData[i+2];
+         i += 3;
+      }
+      /* Store processed image */
+      image_store(strImageOutput);
+
+      /* Free image data */
+      free(imageData);
    }
    return 0 ;
 }
 
+/* FUNCTIONS */
+void image_load(
+   Char8 * file_name)
+{
+   char header[8];    // 8 is the maximum size that can be checked
 
+   /* open file and test for it being a png */
+   FILE *fp = fopen(file_name, "rb");
+   if (!fp)
+      abort_("[read_png_file] File %s could not be opened for reading", file_name);
+
+   fread(header, 1, 8, fp);
+
+   if (png_sig_cmp(header, 0, 8))
+      abort_("[read_png_file] File %s is not recognized as a PNG file", file_name);
+
+
+   /* initialize stuff */
+   png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+
+   if (!png_ptr)
+      abort_("[read_png_file] png_create_read_struct failed");
+
+   info_ptr = png_create_info_struct(png_ptr);
+   if (!info_ptr)
+      abort_("[read_png_file] png_create_info_struct failed");
+
+   if (setjmp(png_jmpbuf(png_ptr)))
+      abort_("[read_png_file] Error during init_io");
+
+   png_init_io(png_ptr, fp);
+   png_set_sig_bytes(png_ptr, 8);
+
+   png_read_info(png_ptr, info_ptr);
+
+   width = png_get_image_width(png_ptr, info_ptr);
+   height = png_get_image_height(png_ptr, info_ptr);
+   color_type = png_get_color_type(png_ptr, info_ptr);
+   bit_depth = png_get_bit_depth(png_ptr, info_ptr);
+
+   number_of_passes = png_set_interlace_handling(png_ptr);
+   png_read_update_info(png_ptr, info_ptr);
+
+
+   /* read file */
+   if (setjmp(png_jmpbuf(png_ptr)))
+      abort_("[read_png_file] Error during read_image");
+
+   row_pointers = (png_bytep*) malloc(sizeof(png_bytep) * height);
+   for (y=0; y<height; y++)
+      row_pointers[y] = (png_byte*) malloc(png_get_rowbytes(png_ptr,info_ptr));
+
+   png_read_image(png_ptr, row_pointers);
+
+   fclose(fp);
+}
+
+void file_store(
+   Char8 * file_name)
+{
+   /* create file */
+   FILE *fp = fopen(file_name, "wb");
+   if (!fp)
+      abort_("[write_png_file] File %s could not be opened for writing", file_name);
+
+
+   /* initialize stuff */
+   png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
+
+   if (!png_ptr)
+      abort_("[write_png_file] png_create_write_struct failed");
+
+   info_ptr = png_create_info_struct(png_ptr);
+   if (!info_ptr)
+      abort_("[write_png_file] png_create_info_struct failed");
+
+   if (setjmp(png_jmpbuf(png_ptr)))
+      abort_("[write_png_file] Error during init_io");
+
+   png_init_io(png_ptr, fp);
+
+
+   /* write header */
+   if (setjmp(png_jmpbuf(png_ptr)))
+      abort_("[write_png_file] Error during writing header");
+
+   png_set_IHDR(png_ptr, info_ptr, width, height,
+                bit_depth, color_type, PNG_INTERLACE_NONE,
+                PNG_COMPRESSION_TYPE_BASE, PNG_FILTER_TYPE_BASE);
+
+   png_write_info(png_ptr, info_ptr);
+
+
+   /* write bytes */
+   if (setjmp(png_jmpbuf(png_ptr)))
+      abort_("[write_png_file] Error during writing bytes");
+
+   png_write_image(png_ptr, row_pointers);
+
+
+   /* end write */
+   if (setjmp(png_jmpbuf(png_ptr)))
+      abort_("[write_png_file] Error during end of write");
+
+   png_write_end(png_ptr, NULL);
+
+   /* cleanup heap allocation */
+   for (y=0; y<height; y++)
+      free(row_pointers[y]);
+
+   free(row_pointers);
+   fclose(fp);
+}
 #if defined (__cplusplus)
 }
 #endif /* defined (__cplusplus) */

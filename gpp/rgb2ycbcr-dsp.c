@@ -47,19 +47,10 @@
 #include <rgb2ycbcr-dsp.h>
 #include <rgb2ycbcr-dsp_os.h>
 
-#include <png.h>
 
 #if defined (__cplusplus)
 extern "C" {
 #endif /* defined (__cplusplus) */
-
-int width, height;
-png_byte color_type;
-png_byte bit_depth;
-
-png_structp png_ptr;
-png_infop info_ptr;
-int number_of_passes;
 
 /*  ============================================================================
  *  @name   NUM_ARGS
@@ -67,7 +58,7 @@ int number_of_passes;
  *  @desc   Number of arguments specified to the DSP application.
  *  ============================================================================
  */
-#define NUM_ARGS 1
+#define NUM_ARGS 2
 
 /*  ============================================================================
  *  @name   XFER_CHAR
@@ -111,6 +102,14 @@ int number_of_passes;
  */
 STATIC Uint32  RGB2YCBCR_DSP_BufferSize ;
 
+/*  ============================================================================
+ *  @name   RGB2YCBCR_DSP_NumIterations
+ *
+ *  @desc   Number of iterations of data transfer. Depends on data total size
+ *  ============================================================================
+ */
+STATIC Uint32  RGB2YCBCR_DSP_NumIterations ;
+
 /** ============================================================================
  *  @name   RGB2YCBCR_DSP_Buffers
  *
@@ -141,6 +140,7 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create (
    IN Char8 * dspExecutable,
    IN Char8 * strImageInput,
    IN Uint8 * strBufferSize,
+   IN Char8 * strNumIterations,
    IN Uint8   processorId)
 {
    DSP_STATUS status                    = DSP_SOK;
@@ -436,11 +436,12 @@ NORMAL_API Void RGB2YCBCR_DSP_Delete(
  *  ============================================================================
  */
 NORMAL_API Void RGB2YCBCR_DSP_Main(
-   IN Char8 * dspExecutable,
-   IN Char8 * strImageInput,
-   IN Char8 * strImageOutput,
-   IN Char8 * strBufferSize,
-   IN Char8 * strProcessorId)
+   IN Char8  * dspExecutable,
+   IN Char8  * dataStream,
+   IN Uint32   dataSize,
+   IN Char8  * strBufferSize,
+   IN Char8  * strNumIterations,
+   IN Char8  * strProcessorId);
 {
    DSP_STATUS status      = DSP_SOK;
    Uint8      processorId = 0;
