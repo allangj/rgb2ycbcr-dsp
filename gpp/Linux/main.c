@@ -118,10 +118,10 @@ int main (int argc, char ** argv)
       /* Read input image */
       image_load(strImageInput);
 
-      /* Calculate data size to process. Represent the size of the array of bytes */
+      /* Calculate data size to process. Represent the size of the array in bytes */
       dataSize = width * height * NUMBER_OF_CHANNELS;
 
-      /* Create array with the data to be processed by the DSP */
+      /* Create array of data to be processed by the DSP this is a tmp variable to hold data */
       imageData = malloc(sizeof(Char8) * dataSize);
 
       /* According to the Data Size and the buffer size we calculate how many iterations are needed */
@@ -129,17 +129,18 @@ int main (int argc, char ** argv)
       if (0 != (dataSize % atoi(strBufferSize))) {
          numIterations += 1;
       }
-      strNumIterations = snprintf(strNumIterations, 10, "%d", numIterations);
+      snprintf(&strNumIterations, 10, "%d", numIterations);
 
 #ifdef DEBUG
-      printf("Data Size: %d\nStrBuffSize: %s\nstrNumIteration: %s", dataSize, strBufferSize, strNumIterations);
+      printf("Data Size: %d\nStrBuffSize: %s\nstrNumIteration: %s", dataSize, strBufferSize, &strNumIterations);
 #endif
 
-      /* Assign data to new array */
-      for (y=0; y<height; y++) {
+      /* Assign data to new array.
+         We have no better way at the moment to use a tmp array with the data */
+      for (y = 0; y < height; y++) {
       png_byte* row = row_pointers[y];
 
-      for (x=0; x<width; x++) {
+      for (x = 0; x < width; x++) {
          png_byte* ptr = &(row[x*3]);
          /* Assign each channel data in R,G,B order */
          if (dataSize < i) {
@@ -152,21 +153,24 @@ int main (int argc, char ** argv)
          i += 3;
       }
 
-      /* Do image processing */
+      /* Do image processing 
+         This is the process we are evaluating. Is in charge of 
+         send data to the DSP, apply transformation and get it back */
       if (processorId < MAX_PROCESSORS) {
          RGB2YCBCR_DSP_Main (dspExecutable,
                              imageData,
                              dataSize,
                              strBufferSize,
-                             strNumIterations,
+                             &strNumIterations,
                              strProcessorId);
       }
 
-      /* Transfer analized data into the image data */
-      for (y=0; y<height; y++) {
+      /* Transfer analized data into the image data we want to store */
+      i = 0;
+      for (y = 0; y < height; y++) {
       png_byte* row = row_pointers[y];
 
-      for (x=0; x<width; x++) {
+      for (x = 0; x < width; x++) {
          png_byte* ptr = &(row[x*3]);
          /* Assign each channel data in R,G,B order */
          if (dataSize < i) {
@@ -181,9 +185,10 @@ int main (int argc, char ** argv)
       /* Store processed image */
       image_store(strImageOutput);
 
-      /* Free image data */
+      /* Free image tmp data */
       free(imageData);
    }
+   /* We are done */
    return 0 ;
 }
 

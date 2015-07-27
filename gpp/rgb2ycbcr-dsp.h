@@ -126,8 +126,10 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create(
  *  ============================================================================
  */
 NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
-   IN Uint8 processorId);
-
+   IN Uint32 numIterations
+   IN Char8  * dataStream,
+   IN Uint32 bufferSize,
+   Uint8     processorId);
 
 /** ============================================================================
  *  @func   RGB2YCBCR_DSP_Delete
