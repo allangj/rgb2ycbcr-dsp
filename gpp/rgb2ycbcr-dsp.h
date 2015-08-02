@@ -98,7 +98,7 @@ extern "C" {
  */
 NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create(
    IN Char8  * dspExecutable,
-   IN Uint8  * strBufferSize,
+   IN Char8  * strBufferSize,
    IN Char8  * strNumIterations,
    IN Uint8    processorId);
 
@@ -126,7 +126,7 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create(
  *  ============================================================================
  */
 NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
-   IN Uint32 numIterations
+   IN Uint32 numIterations,
    IN Char8  * dataStream,
    IN Uint32 bufferSize,
    Uint8     processorId);

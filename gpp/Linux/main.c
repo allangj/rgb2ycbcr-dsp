@@ -36,15 +36,18 @@
 
 
 /*  ----------------------------------- OS Specific Headers           */
-#include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdarg.h>
 
 /*  ----------------------------------- DSP/BIOS Link                 */
 #include <dsplink.h>
 
 /*  ----------------------------------- Application Header            */
-#include <loop_os.h>
-#include <loop.h>
+#include <rgb2ycbcr-dsp_os.h>
+#include <rgb2ycbcr-dsp.h>
 
 /* PNG header to manipulate the image */
 #include <png.h>
@@ -53,6 +56,7 @@
 #define NUMBER_OF_CHANNELS 3
 
 /* Global data */
+int x, y;
 int width, height;
 png_byte color_type;
 png_byte bit_depth;
@@ -70,7 +74,12 @@ void image_load(
    Char8 * file_name);
 
 void image_store(
-   Char8 * file_name)
+   Char8 * file_name);
+
+void abort_(
+   const char * s, 
+   ...);
+
 
 /** ============================================================================
  *  @func   main
@@ -85,15 +94,15 @@ int main (int argc, char ** argv)
    Char8 * dspExecutable    = NULL;
    Char8 * strImageInput    = NULL;
    Char8 * strImageOutput   = NULL;
-   Uint8 * strBufferSize    = NULL;
+   Char8 * strBufferSize    = NULL;
    Char8 * strProcessorId   = NULL;
    Uint8   processorId      = 0;
-   Char8 * buf_data         = NULL;
    Uint32  dataSize         = 0;
    Uint32  i                = 0;
    Char8 * imageData        = NULL;
    Uint32  numIterations    = 0;
-   Uint8   strNumIterations[10];
+   Char8   strNumIterations[10];
+   Char8 * strNumIterationsPtr = NULL;
 
    if ((argc != 6) && (argc != 5)) {
       printf ("Usage : %s <absolute path of DSP executable> "
@@ -125,11 +134,12 @@ int main (int argc, char ** argv)
       imageData = malloc(sizeof(Char8) * dataSize);
 
       /* According to the Data Size and the buffer size we calculate how many iterations are needed */
-      numIterations = dataSize / atoi(strBufferSize);
+      numIterations = (Uint32) (dataSize / atoi(strBufferSize));
       if (0 != (dataSize % atoi(strBufferSize))) {
          numIterations += 1;
       }
-      snprintf(&strNumIterations, 10, "%d", numIterations);
+      snprintf(strNumIterations, 10, "%u", (unsigned int) numIterations);
+      strNumIterationsPtr = &strNumIterations[0];
 
 #ifdef DEBUG
       printf("Data Size: %d\nStrBuffSize: %s\nstrNumIteration: %s", dataSize, strBufferSize, &strNumIterations);
@@ -138,19 +148,20 @@ int main (int argc, char ** argv)
       /* Assign data to new array.
          We have no better way at the moment to use a tmp array with the data */
       for (y = 0; y < height; y++) {
-      png_byte* row = row_pointers[y];
+         png_byte* row = row_pointers[y];
 
-      for (x = 0; x < width; x++) {
-         png_byte* ptr = &(row[x*3]);
-         /* Assign each channel data in R,G,B order */
-         if (dataSize < i) {
-            printf("ERROR: i greater than array size\n");
-            return -1;
+         for (x = 0; x < width; x++) {
+            png_byte* ptr = &(row[x*3]);
+            /* Assign each channel data in R,G,B order */
+            if (dataSize < i) {
+               printf("ERROR: i greater than array size\n");
+               return -1;
+            }
+            imageData[i]   = ptr[0];
+            imageData[i+1] = ptr[1];
+            imageData[i+2] = ptr[2];
+            i += 3;
          }
-         imageData[i]   = ptr[0];
-         imageData[i+1] = ptr[1];
-         imageData[i+2] = ptr[2];
-         i += 3;
       }
 
       /* Do image processing 
@@ -161,26 +172,27 @@ int main (int argc, char ** argv)
                              imageData,
                              dataSize,
                              strBufferSize,
-                             &strNumIterations,
+                             strNumIterationsPtr,
                              strProcessorId);
       }
 
       /* Transfer analized data into the image data we want to store */
       i = 0;
       for (y = 0; y < height; y++) {
-      png_byte* row = row_pointers[y];
+         png_byte* row = row_pointers[y];
 
-      for (x = 0; x < width; x++) {
-         png_byte* ptr = &(row[x*3]);
-         /* Assign each channel data in R,G,B order */
-         if (dataSize < i) {
-            printf("ERROR: i greater than array size\n");
-            return -1;
+         for (x = 0; x < width; x++) {
+            png_byte* ptr = &(row[x*3]);
+            /* Assign each channel data in R,G,B order */
+            if (dataSize < i) {
+               printf("ERROR: i greater than array size\n");
+               return -1;
+            }
+            ptr[0] = imageData[i];
+            ptr[1] = imageData[i+1];
+            ptr[2] = imageData[i+2];
+            i += 3;
          }
-         ptr[0] = imageData[i];
-         ptr[1] = imageData[i+1];
-         ptr[2] = imageData[i+2];
-         i += 3;
       }
       /* Store processed image */
       image_store(strImageOutput);
@@ -193,6 +205,18 @@ int main (int argc, char ** argv)
 }
 
 /* FUNCTIONS */
+void abort_(
+   const char * s, 
+   ...)
+{
+   va_list args;
+   va_start(args, s);
+   vfprintf(stderr, s, args);
+   fprintf(stderr, "\n");
+   va_end(args);
+   abort();
+}
+
 void image_load(
    Char8 * file_name)
 {
@@ -249,7 +273,7 @@ void image_load(
    fclose(fp);
 }
 
-void file_store(
+void image_store(
    Char8 * file_name)
 {
    /* create file */
@@ -305,6 +329,7 @@ void file_store(
    free(row_pointers);
    fclose(fp);
 }
+
 #if defined (__cplusplus)
 }
 #endif /* defined (__cplusplus) */

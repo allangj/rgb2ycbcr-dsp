@@ -137,18 +137,16 @@ STATIC ChannelIOInfo RGB2YCBCR_DSP_IOReq;
  */
 NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create (
    IN Char8  * dspExecutable,
-   IN Uint8  * strBufferSize,
+   IN Char8  * strBufferSize,
    IN Char8  * strNumIterations,
    IN Uint8    processorId)
 {
    DSP_STATUS status                    = DSP_SOK;
-   Char8 *    temp                      = NULL;
    Uint32     numArgs                   = 0;
    Uint32     numBufs [NUMBUFFERPOOLS]  = {NUMBUFS};
 
    ChannelAttrs chnlAttrInput;
    ChannelAttrs chnlAttrOutput;
-   Uint16       i;
    Char8 *      args [NUM_ARGS];
    Uint32       size [NUMBUFFERPOOLS];
 #if defined (ZCPY_LINK)
@@ -199,6 +197,7 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create (
    if (DSP_SUCCEEDED (status)) {
       numArgs = NUM_ARGS;
       args[0] = strBufferSize;
+      args[1] = strNumIterations;
 
       status = PROC_load (processorId, dspExecutable, numArgs, args);
 
@@ -270,7 +269,7 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Create (
  *  ============================================================================
  */
 NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
-   IN Uint32 numIterations
+   IN Uint32 numIterations,
    IN Char8  * dataStream,
    IN Uint32 bufferSize,
    Uint8     processorId)
@@ -301,7 +300,7 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
    }
 
    for (i = 1;
-        ((RGB2YCBCR_DSP_NumIterations == 0) || (i <= LOOP_NumIterations))
+        ((RGB2YCBCR_DSP_NumIterations == 0) || (i <= RGB2YCBCR_DSP_NumIterations))
          && (DSP_SUCCEEDED (status)); i++) {
 
       /* Calculate offset */
@@ -471,15 +470,15 @@ NORMAL_API Void RGB2YCBCR_DSP_Main(
    IN Uint32   dataSize,
    IN Char8  * strBufferSize,
    IN Char8  * strNumIterations,
-   IN Char8  * strProcessorId);
+   IN Char8  * strProcessorId)
 {
    DSP_STATUS status      = DSP_SOK;
    Uint8      processorId = 0;
 
-   RGB2YCBCR_DSP_0Print ("=============== tecSat Application : RGB2YCBCR_DSP ==========\n");
+   RGB2YCBCR_DSP_0Print("=============== tecSat Application : RGB2YCBCR_DSP ==========\n");
 
    if ((dspExecutable != NULL) && (dataStream != NULL) && (dataSize != 0) && 
-       && (strBufferSize != NULL) && (strNumIterations != NULL) && (strProcessorId != NULL)) {
+       (strBufferSize != NULL) && (strNumIterations != NULL) && (strProcessorId != NULL)) {
       /*
        *  Validate the buffer size and number of iterations specified.
        */
@@ -493,7 +492,7 @@ NORMAL_API Void RGB2YCBCR_DSP_Main(
       RGB2YCBCR_DSP_NumIterations = RGB2YCBCR_DSP_Atoi(strNumIterations);
       if (0 == RGB2YCBCR_DSP_NumIterations)
       {
-         RGB2YCBCR_DSP_1Print("==Erro: Invalid number of iterations %d ==\n", RGB2YCBCR_DSP_NumIterations)
+         RGB2YCBCR_DSP_1Print("==Erro: Invalid number of iterations %d ==\n", RGB2YCBCR_DSP_NumIterations);
          status = DSP_EFAIL;
       }
 
