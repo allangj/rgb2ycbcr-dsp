@@ -228,7 +228,7 @@ Void main(Int argc, Char *argv[])
     DSPLINK_init () ;
 
     /* Get the number of transfers to be done by the application */
-    numTransfers = 1; //atoi (argv[1]) ;
+    numTransfers = atoi (argv[1]) ;
 
     /* Transfer size given by GPP side */
     xferBufSize = DSPLINK_ALIGN ((atoi (argv[0]) / DSP_MAUSIZE),

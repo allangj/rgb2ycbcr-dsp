@@ -73,15 +73,15 @@
  *  C = [16; 128; 128];
  *  ============================================================================
  */
-#define D11 0.257
-#define D12 0.502
-#define D13 0.098
-#define D21 -0.148
-#define D22 -0.289
-#define D23 0.438
-#define D31 0.438
-#define D32 -0.366
-#define D33 -0.071
+#define D11 257
+#define D12 502
+#define D13 98
+#define D21 -148
+#define D22 -289
+#define D23 438
+#define D31 438
+#define D32 -366
+#define D33 -71
 #define C1 16
 #define C2 128
 #define C3 128
@@ -486,15 +486,15 @@ static Void rgb2ycbcr_dspSWI (Arg arg0, Arg arg1)
     Uns                    numWordsToWrite = info->readWords;
     Int                    iomStatus;
     Uns i;
-    Real32                 y,cb,cr;
+    Uint32                 y,cb,cr;
 
     (Void) arg1 ; /* To remove compiler warning */
 
     /* Do processing of data here */
     for (i = 0 ; (i+3) <= info->readWords ; i = i+3) {
-       y = (D11 * info->inputBuffer[i]) + (D12 * info->inputBuffer[i+1]) + (D13 * info->inputBuffer[i+2]) + C1;
-       cb = (D21 * info->inputBuffer[i]) + (D22 * info->inputBuffer[i+1]) + (D23 * info->inputBuffer[i+2]) + C2;
-       cr = (D31 * info->inputBuffer[i]) + (D32 * info->inputBuffer[i+1]) + (D33 * info->inputBuffer[i+2]) + C3;
+       y = (((D11 * info->inputBuffer[i]) + (D12 * info->inputBuffer[i+1]) + (D13 * info->inputBuffer[i+2])) / 100) + C1;
+       cb = (((D21 * info->inputBuffer[i]) + (D22 * info->inputBuffer[i+1]) + (D23 * info->inputBuffer[i+2])) / 100) + C2;
+       cr = (((D31 * info->inputBuffer[i]) + (D32 * info->inputBuffer[i+1]) + (D33 * info->inputBuffer[i+2])) / 100) + C3;
 
        info->outputBuffer[i] = y;
        info->outputBuffer[i+1] = cb;
