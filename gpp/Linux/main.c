@@ -54,6 +54,7 @@
 
 /* Defines */
 #define NUMBER_OF_CHANNELS 3
+#define DEBUG
 
 /* Global data */
 int x, y;
@@ -142,7 +143,7 @@ int main (int argc, char ** argv)
       strNumIterationsPtr = &strNumIterations[0];
 
 #ifdef DEBUG
-      printf("Data Size: %d\nStrBuffSize: %s\nstrNumIteration: %s", dataSize, strBufferSize, &strNumIterations);
+      printf("Data Size: %d\nStrBuffSize: %s\nstrNumIteration: %s\n processorId: %d\n, MAX_PROCESSORS: %d\n", dataSize, strBufferSize, &strNumIterations, processorId, MAX_PROCESSORS);
 #endif
 
       /* Assign data to new array.
@@ -168,6 +169,9 @@ int main (int argc, char ** argv)
          This is the process we are evaluating. Is in charge of 
          send data to the DSP, apply transformation and get it back */
       if (processorId < MAX_PROCESSORS) {
+#ifdef DEBUG
+         printf("DEBUG: About to call RGB2YCBCR_DSP_Main");
+#endif
          RGB2YCBCR_DSP_Main (dspExecutable,
                              imageData,
                              dataSize,
