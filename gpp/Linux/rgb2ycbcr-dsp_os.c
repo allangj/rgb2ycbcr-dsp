@@ -83,7 +83,7 @@ NORMAL_API Void RGB2YCBCR_DSP_1Print (
    Char8 * str, 
    Uint32 arg)
 {
-   printf ("%s %u", str, (unsigned int) arg);
+   printf (str, arg);
    fflush (stdout);
 }
 

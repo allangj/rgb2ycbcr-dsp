@@ -170,7 +170,7 @@ int main (int argc, char ** argv)
          send data to the DSP, apply transformation and get it back */
       if (processorId < MAX_PROCESSORS) {
 #ifdef DEBUG
-         printf("DEBUG: About to call RGB2YCBCR_DSP_Main");
+         printf("DEBUG: About to call RGB2YCBCR_DSP_Main\n");
 #endif
          RGB2YCBCR_DSP_Main (dspExecutable,
                              imageData,
