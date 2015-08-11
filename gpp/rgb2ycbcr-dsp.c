@@ -290,7 +290,7 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
    status = PROC_start(processorId);
 
 #ifdef DEBUG
-   RGB2YCBCR_DSP_1Print("Execute proc, PROC started\n");
+   RGB2YCBCR_DSP_0Print("Execute proc, PROC started\n");
 #endif
 
    /*
