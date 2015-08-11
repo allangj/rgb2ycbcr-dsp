@@ -299,9 +299,17 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
       RGB2YCBCR_DSP_1Print("PROC_start failed. Status = [0x%x]\n", status);
    }
 
+#ifdef DEBUG
+   RGB2YCBCR_DSP_1Print("Execute proc, starting iterations: %d\n", RGB2YCBCR_DSP_NumIterations);
+#endif
+
    for (i = 1;
         ((RGB2YCBCR_DSP_NumIterations == 0) || (i <= RGB2YCBCR_DSP_NumIterations))
          && (DSP_SUCCEEDED (status)); i++) {
+
+#ifdef DEBUG
+      RGB2YCBCR_DSP_1Print("Execute proc, iteration: %d\n", i);
+#endif
 
       /* Calculate offset */
       offsetData = bufferSize * (i - 1);
@@ -314,6 +322,10 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
          *temp++ = (dataStream[j + offsetData]);
       }
 
+#ifdef DEBUG
+      RGB2YCBCR_DSP_1Print("Execute proc, offsetData: %d\n", offsetData);
+#endif
+
       /* Start counting time from here */
       /*
        *  Send data to DSP.
@@ -323,6 +335,10 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
       if (DSP_FAILED (status)) {
          RGB2YCBCR_DSP_1Print("CHNL_issue failed (output). Status = [0x%x]\n", status);
       }
+
+#ifdef DEBUG
+      RGB2YCBCR_DSP_0Print("Execute proc, data send\n");
+#endif
 
       /*
        *  Reclaim 'empty' buffer from the channel
@@ -335,6 +351,10 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
          }
       }
 
+#ifdef DEBUG
+      RGB2YCBCR_DSP_0Print("Execute proc, buffer reclaimed\n");
+#endif
+
       /*
        *  Receive data from DSP
        *  Issue 'empty' buffer to the channel.
@@ -346,6 +366,9 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
          }
       }
 
+#ifdef DEBUG
+      RGB2YCBCR_DSP_0Print("Execute proc, buffer reclaimed\n");
+#endif
       /*
        *  Reclaim 'filled' buffer from the channel
        */
@@ -356,6 +379,9 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
          }
       }
 
+#ifdef DEBUG
+      RGB2YCBCR_DSP_0Print("Execute proc, buffer filled\n");
+#endif
       /* Stop counting time */
 
       /* We have transfered all data and got it back */
@@ -364,6 +390,7 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
       }
       else {
          // We fail
+         RGB2YCBCR_DSP_0Print("Execute proc, ERROR\n");
          break;
       }
 
