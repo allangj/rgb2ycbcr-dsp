@@ -295,7 +295,7 @@ Int TSKRGB2YCBCR_DSP_execute(TSKRGB2YCBCR_DSP_TransferInfo * info)
         /* Do processing on this buffer */
         if (status == SYS_OK) {
             /* Add code to process the buffer here*/
-            for (i = 0; i < info->receivedSize; i++)
+            for (i = 0; i < info->bufferSize; i++)
             {
                 //if (0 != (i%3))
                    //buffer[i] = 0;
