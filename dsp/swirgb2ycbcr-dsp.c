@@ -492,7 +492,10 @@ static Void rgb2ycbcr_dspSWI (Arg arg0, Arg arg1)
 
    /* Do processing of data here */
    for (i = 0 ; i < info->readWords ; i++) {
-      info->outputBuffer [i] = info->inputBuffer [i] ;
+      if (0 == (i % 3))
+         info->outputBuffer [i] = info->inputBuffer [i];
+      else
+         info->outputBuffer [i] = 0;
    }
 #if 0
     /* Do processing of data here */
