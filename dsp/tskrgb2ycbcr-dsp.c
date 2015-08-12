@@ -295,6 +295,7 @@ Int TSKRGB2YCBCR_DSP_execute(TSKRGB2YCBCR_DSP_TransferInfo * info)
         /* Do processing on this buffer */
         if (status == SYS_OK) {
             /* Add code to process the buffer here*/
+#if 0
             for (i = 0 ; (i+3) <= info->receivedSize ; i = i+3) {
                y = (((D11 * info->buffers[0][i]) + (D12 * info->buffers[0][i+1]) + (D13 * info->buffers[0][i+2])) / 100) + C1;
                cb = (((D21 * info->buffers[0][i]) + (D22 * info->buffers[0][i+1]) + (D23 * info->buffers[0][i+2])) / 100) + C2;
@@ -304,6 +305,7 @@ Int TSKRGB2YCBCR_DSP_execute(TSKRGB2YCBCR_DSP_TransferInfo * info)
                info->buffers[0][i+1] = cb;
                info->buffers[0][i+2] = cr;
             }
+#endif
         }
 
         /* Send the processed buffer back to GPP */

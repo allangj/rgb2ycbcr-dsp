@@ -358,7 +358,7 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
       }
 
 #ifdef DEBUG
-      RGB2YCBCR_DSP_0Print("Execute proc, buffer reclaimed\n");
+      RGB2YCBCR_DSP_0Print("Execute proc, empty buffer reclaimed\n");
 #endif
 
       /*
@@ -373,7 +373,7 @@ NORMAL_API DSP_STATUS RGB2YCBCR_DSP_Execute(
       }
 
 #ifdef DEBUG
-      RGB2YCBCR_DSP_0Print("Execute proc, buffer reclaimed\n");
+      RGB2YCBCR_DSP_0Print("Execute proc, data buffer reclaimed\n");
 #endif
       /*
        *  Reclaim 'filled' buffer from the channel
