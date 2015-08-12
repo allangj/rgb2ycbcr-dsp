@@ -52,7 +52,7 @@
 extern "C" {
 #endif /* defined (__cplusplus) */
 
-#define DEBUG
+//#define DEBUG
 
 /*  ============================================================================
  *  @name   NUM_ARGS

@@ -490,15 +490,7 @@ static Void rgb2ycbcr_dspSWI (Arg arg0, Arg arg1)
 
     (Void) arg1 ; /* To remove compiler warning */
 
-   /* Do processing of data here */
-   for (i = 0 ; i < info->readWords ; i++) {
-      if (0 == (i % 3))
-         info->outputBuffer [i] = info->inputBuffer [i];
-      else
-         info->outputBuffer [i] = 0;
-   }
-#if 0
-    /* Do processing of data here */
+    /* Do processing of data here. IMPORTANT: At the moment it seems the one executing is tsk mode */
     for (i = 0 ; (i+3) <= info->readWords ; i = i+3) {
        y = (((D11 * info->inputBuffer[i]) + (D12 * info->inputBuffer[i+1]) + (D13 * info->inputBuffer[i+2])) / 100) + C1;
        cb = (((D21 * info->inputBuffer[i]) + (D22 * info->inputBuffer[i+1]) + (D23 * info->inputBuffer[i+2])) / 100) + C2;
@@ -508,7 +500,6 @@ static Void rgb2ycbcr_dspSWI (Arg arg0, Arg arg1)
        info->outputBuffer[i+1] = cb;
        info->outputBuffer[i+2] = cr;
     }
-#endif
 
     /* Submit a Read data request */
     iomStatus = GIO_submit (info->gioInputChan,
