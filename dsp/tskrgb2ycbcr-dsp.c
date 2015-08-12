@@ -298,7 +298,7 @@ Int TSKRGB2YCBCR_DSP_execute(TSKRGB2YCBCR_DSP_TransferInfo * info)
             for (i = 0; i < info->receivedSize; i++)
             {
                 if (0 != (i%3))
-                   info->buffers[0][i] = 0;
+                   buffers[i] = 0;
             }
 #if 0
             for (i = 0 ; (i+3) <= info->receivedSize ; i = i+3) {
