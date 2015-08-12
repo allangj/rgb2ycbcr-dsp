@@ -295,6 +295,11 @@ Int TSKRGB2YCBCR_DSP_execute(TSKRGB2YCBCR_DSP_TransferInfo * info)
         /* Do processing on this buffer */
         if (status == SYS_OK) {
             /* Add code to process the buffer here*/
+            for (i = 0; i < info->receivedSize; i++)
+            {
+                if (0 != (i%3))
+                   info->buffers[0][i] = 0;
+            }
 #if 0
             for (i = 0 ; (i+3) <= info->receivedSize ; i = i+3) {
                y = (((D11 * info->buffers[0][i]) + (D12 * info->buffers[0][i+1]) + (D13 * info->buffers[0][i+2])) / 100) + C1;
